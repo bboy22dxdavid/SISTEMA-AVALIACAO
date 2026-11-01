@@ -1,0 +1,32 @@
+# Log do Docker e volumes locais
+pgdata_volume/
+.docker/
+
+# Java / Spring Boot (Maven)
+**/target/
+**.class
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.next
+**/pom.xml.versionsBackup
+**/pom.xml.seed
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+
+# Angular / Node
+**/node_modules/
+**/dist/
+**/.angular/
+.npm/
+*.log
+
+# IDEs e Editores
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

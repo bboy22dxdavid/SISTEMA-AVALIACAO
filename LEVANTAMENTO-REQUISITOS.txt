@@ -1,0 +1,184 @@
+SISTEMA-AVALIAÇÃO-NIVELAMENTO-GRADUADOS
+
+- Sistema atual utiliza uma planilha de dados, como sistema de votação
+recebo os dados de militares.
+O militar avaliado, através dos seguintes conceitos, a serem julgados exemplo: 
+- Foto perfil
+- Nome 
+- Qualidade do trabalho 
+- Produtividade no trabalho 
+- Conhecimento profissional
+- Eficiência no trabalho em equipe
+- Emprego meio matéria 
+- Planejamento 
+- Julgamento 
+- Responsabilidade 
+- Disciplina 
+- Apresentação pessoal
+- Liderança
+- Iniciativa
+- Adaptabilidade
+- Comunicação oral e escrita
+- Relacionamento ambiente de trabalho
+
+Os avaliados recebem uma nota de 0 a 10 para cada conceito ou item, ao final e gerado uma nota final, somando o total.
+
+O nivelamento do militar passa por uma revisão para analisar os critérios julgado anteriormente, e pode concordar com a nota ou discordar e ser atribuído uma nova nota.
+obs: deve conter a justificativa da alteração da nota.
+
+============================
+Telas - inicial
+toolbar. ou sidebar (menu lateral) HEADER.
+container geral
+footer
+
+Elementos do TOOLBAR
+logo marca no canto superior esquerdo da tela, com link de redirecionamento para pagina inicial.
+ menu de navegação para as paginas, centralizados.
+utilitário  perfil, com botão para deslogar, no canto superior direito.
+
+Elementos do Container central.
+titulo, ex: Sistema de Avaliação e Nivelamento de Graduados.
+Butão de pesquisa.
+tabela, gerando uma tela listando o ranking. ordenado pela nota mais alta.
+obs: As colunas foto, nome, pontuação e ação, botão (para redirecionar para tela de Avaliação).
+
+
+Elementos do Footer.
+logo marca no canto superior esquerdo da tela, com link de redirecionamento para pagina inicial.
+Titulo
+
+obs: verificar a possibilidade de obter o clone de um banco de dados já populado, para carregar os dados dos militares 
+==================================================
+
+Telas - cadastro de usuário 
+toolbar. ou sidebar (menu lateral) HEADER.
+container com formulário de cadastro
+footer
+
+ obs: Itens para formulário, id, saram, nome Guerra,  password, seção, cod_posto, posto, quadro, função, antiguidade, ativo
+
+==================================================
+
+Telas - login
+toolbar. ou sidebar (menu lateral) HEADER.
+container com formulário de cadastro
+footer
+
+obs: Itens para formulário username, password
+
+==================================================
+
+Telas - avaliação
+
+toolbar. ou sidebar (menu lateral) HEADER.
+container com uma botão para pesquisa de usuário, apos a pesquisa listar o usuário e  deve vincular a um usuário tabela com os itens do conceito de avaliação para cadastro de notas.  
+footer
+==================================================
+
+PARAMETROS
+
+Entidades
+
+Usuários
+
+id
+username
+password
+roles
+--------------------------------
+Avaliados
+
+id
+saram
+nguerra
+seção
+cod_posto
+posto
+quadro
+funcao
+antiguidade
+ativo
+
+---------------------------------
+Roles
+id
+role
+
+---------------------------------
+Avaliacao
+
+id
+avaliado_id(fk_usuario)
+avaliador_id(fk_usuario)
+conceitos{
+	qualidadeTrabalho: number;
+    	produtividadeTrabalho:number;
+    	conhecimentoProfissional:number;
+    	eficienciaTrabalho:number;
+    	meiosMateriais:number;
+    	planejamento:number;
+    	julgamento:number;
+    	responsabilidade:number;
+    	disciplina:number;
+    	apresentacaoPessoal:number;
+    	lideranca:number;
+    	iniciativa:number;
+    	adaptabilidade:number;
+    	comunicacaoOralEscrita:number;
+    	relacionamentoAmbienteTrabalho:number;
+	
+	justificativa:text
+	conceitoMoral:text
+	conceitoProfissional:text
+
+}
+processo(ano)fk
+----------------------------------------
+Nivelamento
+
+id
+id_avaliacao(fk_avaliacao)
+comando(usuario_id)
+conceitos{
+	qualidadeTrabalho: number;
+    	produtividadeTrabalho:number;
+    	conhecimentoProfissional:number;
+    	eficienciaTrabalho:number;
+    	meiosMateriais:number;
+    	planejamento:number;
+    	julgamento:number;
+    	responsabilidade:number;
+    	disciplina:number;
+    	apresentacaoPessoal:number;
+    	lideranc:number;
+    	iniciativa:number;
+    	adaptabilidade:number;
+    	comunicacaoOralEscrita:number;
+    	relacionamentoAmbienteTrabalho:number;
+	
+	justificativa:text
+	conceitoMoral:text
+	conceitoProfissional:text
+
+}
+
+------------------------------------------------
+Processo
+
+id
+ano
+
+--------------------------------------------------------
+
+PADRÃO DE ENDPOINTS
+
+URL: localhost ou IP
+
+URI: 
+/api/users
+/api/avaliacao
+/api/nivelamento
+/api/processos
+/api/roles
+

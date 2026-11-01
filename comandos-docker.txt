@@ -1,0 +1,40 @@
+## VERIFICANDO A VERSÃO
+docker --version
+
+## VERIFICANDO AS IMG RODANDO
+docker ps
+
+## COMANDO PARA CRIAR A NETWORK
+docker network create nome
+
+
+##CRIANDO A IMG DO BANCO 
+ docker run -d --name sang-postgres --network sang-network -p 5433:5432 -e POSTGRES_DB=avaliacao -e POSTGRES_USER=sang -e POSTGRES_PASSWORD=sang -v pgdata_volume:/var/lib/postgresql/data postgres:16-alpine
+
+
+ ## COMANDO PARA CRIAR A IMG DE SGBD  Subir o pgAdmin 4
+docker run -d --name sang-pgadmin --network sang-network -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin dpage/pgadmin4
+
+
+
+## COMANDO PARA VERIFICAR O STATUS
+docker ps
+
+
+## COMANDO PARA DAR STOP NOS CONTAINERS
+docker stop
+
+## COMANDO PARA STARTA OS CONTAINERS
+docker ps -a
+
+## COMANDO PARA DELETAR OS CONTAINERS
+docker container rm
+
+## COMANDO PARA CRIA UMA NETWORK
+docker network create library-networl
+
+##COMANDO PARA VERIFICAR SE A PORTA ESTA SENDO UTILIZADA
+netstart -aof | findstr 5433
+
+Na raiz do projeto baixado, execute o comando mágico do Docker que vai ler o arquivo que você criou, baixar as imagens corretas, criar a network e iniciar os servidores automaticamente:bash
+docker compose up -d

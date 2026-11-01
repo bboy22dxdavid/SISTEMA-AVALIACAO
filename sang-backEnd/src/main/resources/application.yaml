@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: sang-backEnd
+# --- CONEXÃO COM O BANCO DE DADOS (POSTGRESQL) ---
+  datasource:
+    url: jdbc:postgresql://sang-postgres:5432/avaliacao
+    username: sang
+    password: sang
+    driver-class-name: org.postgresql.Driver
+# --- CONFIGURAÇÕES DO HIBERNATE / JPA ---
+  jpa:
+    hibernate:
+      ddl-auto: update # Cria/Atualiza as tabelas automaticamente ao subir o Spring
+    show-sql: true     # Exibe os comandos SQL executados no console do Docker
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL no console para facilitar a leitura
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    # --- CONFIGURAÇÃO DE PORTA DO SERVIDOR ---
+    server:
+      port: 8081

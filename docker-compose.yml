@@ -1,0 +1,70 @@
+ version: '3.8'
+
+services:
+  # --- BANCO DE DADOS (PostgreSQL) ---
+  avaliacaodb:
+    image: postgres:16.3
+    container_name: sang-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER=sang
+      POSTGRES_PASSWORD=sang
+      POSTGRES_DB=avaliacao
+    networks:
+      - sang-network 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+   
+
+  # --- GERENCIADOR DO BANCO (pgAdmin) ---
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: sang-pgadmin
+    ports:
+      - "15432:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD: admin
+    
+    depends_on:
+      - avaliacaodb
+    networks:
+      sang-network
+   
+
+  # --- BACK-END (Spring Boot - Java 21) ---
+  backend:
+    build: ./sang-backEnd
+    container_name: sang-backend
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_avaliacao
+      - SPRING_DATASOURCE_USERNAME=sang
+      - SPRING_DATASOURCE_PASSWORD=sang
+    depends_on:
+      - db
+    networks:
+      - sang-network
+
+  # --- FRONT-END (Angular) ---
+  frontend:
+    build: ./sang-frontEnd
+    container_name: sang-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - sang-network
+
+# --- REDE UNIFICADA ---
+networks:
+  sang-network:
+    driver: bridge
+
+# --- VOLUMES PARA PERSISTÊNCIA ---
+volumes:
+  pgdata: 
+    driver: local
