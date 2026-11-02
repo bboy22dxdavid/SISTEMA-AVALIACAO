@@ -64,4 +64,10 @@ public class AvaliacaoService {
     private boolean isNotaInvalida(Integer nota) {
         return nota == null || nota < 0 || nota > 10;
     }
+
+    //metodo deletar
+    public void deletar(Long id) {
+        Avaliacao avaliacao = buscarPorId(id);
+        repository.delete(avaliacao);
+    }
 }

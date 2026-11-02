@@ -52,4 +52,16 @@ public class NivelamentoService {
     private boolean isNotaInvalida(Integer nota) {
         return nota == null || nota < 0 || nota > 10;
     }
+
+    // metodo de bucar por id
+    public Nivelamento buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nivelamento não encontrado com o ID: " + id));
+    }
+
+    //metodo de deletar
+    public void deletar(Long id) {
+        Nivelamento nivelamento = buscarPorId(id);
+        repository.delete(nivelamento);
+    }
 }
