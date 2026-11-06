@@ -3,13 +3,16 @@ package io.github.bboy22dxdavid.sang_backEnd.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Table(name = "tb_avaliados")
 public class Avaliado {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String saram;
@@ -41,7 +44,7 @@ public class Avaliado {
     // Construtores
     public Avaliado() {}
 
-    public Avaliado(Long id, Boolean ativo, Integer antiguidade, String quadro, String funcao, String posto,
+    public Avaliado(UUID id, Boolean ativo, Integer antiguidade, String quadro, String funcao, String posto,
                     String codPosto, String secao, String nGuerra, String saram) {
         this.id = id;
         this.ativo = ativo;

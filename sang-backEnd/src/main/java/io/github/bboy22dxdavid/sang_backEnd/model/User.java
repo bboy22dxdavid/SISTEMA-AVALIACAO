@@ -1,18 +1,16 @@
 package io.github.bboy22dxdavid.sang_backEnd.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import java.util.UUID;
 
-import javax.management.relation.Role;
-
-@Data
 @Entity
 @Table(name = "tb_users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -20,20 +18,29 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // Relacionamento Muitos para Um com a tabela de Perfis
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    // Relacionamento Manual: Salvamos apenas o ID numérico da Role física do banco
+    @Column(name = "role_id")
+    private Integer roleId;
 
-    //construtor vazio
+    // Construtores
     public User() {}
 
-    public User(Long id, String username, String password, Role role) {
-        this.id = id;
+    public User(String username, String password, Integer roleId) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roleId = roleId;
     }
 
-    // Getters e Setters manual se preciso
+    // Construtores, Getters e Setters Manuais
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public Integer getRoleId() { return roleId; }
+    public void setRoleId(Integer roleId) { this.roleId = roleId; }
 }

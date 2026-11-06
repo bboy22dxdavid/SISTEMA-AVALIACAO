@@ -10,3 +10,5 @@ spring:
     hibernate:
       ddl-auto: validate # Força a criação automática da tabela tb_processos no banco
     show-sql: true
+
+

@@ -12,9 +12,9 @@ docker network create nome
  docker run -d --name sang-postgres --network sang-network -p 5433:5432 -e POSTGRES_DB=avaliacao -e POSTGRES_USER=sang -e POSTGRES_PASSWORD=sang -v pgdata_volume:/var/lib/postgresql/data postgres:16-alpine
 
 
+
  ## COMANDO PARA CRIAR A IMG DE SGBD  Subir o pgAdmin 4
 docker run -d --name sang-pgadmin --network sang-network -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin dpage/pgadmin4
-
 
 
 ## COMANDO PARA VERIFICAR O STATUS

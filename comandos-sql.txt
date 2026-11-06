@@ -1,0 +1,120 @@
+-- =========================================================================
+-- 1. TABELAS INDEPENDENTES
+-- =========================================================================
+
+-- Tabela de Papéis de Acesso (Roles)
+CREATE TABLE tb_roles (
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tabela de Usuários (Avaliadores / Administradores / Comando)
+CREATE TABLE tb_users (
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tabela de Dados Militares dos Avaliados
+CREATE TABLE tb_avaliados (
+    id BIGSERIAL PRIMARY KEY,
+    saram VARCHAR(20) NOT NULL UNIQUE,
+    nguerra VARCHAR(100) NOT NULL,
+    secao VARCHAR(50),
+    cod_posto VARCHAR(10),
+    posto VARCHAR(50),
+    quadro VARCHAR(20),
+    funcao VARCHAR(100),
+    antiguidade INTEGER,
+    ativo BOOLEAN DEFAULT TRUE
+);
+
+-- Tabela de Processos (Ano de Vigência)
+CREATE TABLE tb_processos (
+    id SERIAL PRIMARY KEY,
+    ano INTEGER NOT NULL UNIQUE
+);
+
+-- =========================================================================
+-- 2. TABELAS DE RELACIONAMENTO E DEPENDENTES
+-- =========================================================================
+
+-- Tabela Associativa N:N (Usuários e Papéis)
+CREATE TABLE tb_users_roles (
+    user_id BIGINT NOT NULL,
+    role_id INTEGER NOT NULL,
+    CONSTRAINT pk_users_roles PRIMARY KEY (user_id, role_id),
+    CONSTRAINT fk_users_roles_user FOREIGN KEY (user_id) REFERENCES tb_users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_users_roles_role FOREIGN KEY (role_id) REFERENCES tb_roles(id) ON DELETE CASCADE
+);
+
+-- Tabela de Avaliações (Notas do Avaliador)
+CREATE TABLE tb_avaliacoes (
+    id BIGSERIAL PRIMARY KEY,
+    avaliado_id BIGINT NOT NULL,
+    avaliador_id BIGINT NOT NULL,
+    processo_id INTEGER NOT NULL,
+    
+    -- Campos de Conceito (Notas de 0 a 10 com precisão de uma casa decimal)
+    qualidade_trabalho NUMERIC(3,1) CHECK (qualidade_trabalho >= 0 AND qualidade_trabalho <= 10),
+    produtividade_trabalho NUMERIC(3,1) CHECK (produtividade_trabalho >= 0 AND produtividade_trabalho <= 10),
+    conhecimento_profissional NUMERIC(3,1) CHECK (conhecimento_profissional >= 0 AND conhecimento_profissional <= 10),
+    eficiencia_trabalho NUMERIC(3,1) CHECK (eficiencia_trabalho >= 0 AND eficiencia_trabalho <= 10),
+    meios_materiais NUMERIC(3,1) CHECK (meios_materiais >= 0 AND meios_materiais <= 10),
+    planejamento NUMERIC(3,1) CHECK (planejamento >= 0 AND planejamento <= 10),
+    julgamento NUMERIC(3,1) CHECK (julgamento >= 0 AND julgamento <= 10),
+    responsabilidade NUMERIC(3,1) CHECK (responsabilidade >= 0 AND responsabilidade <= 10),
+    disciplina NUMERIC(3,1) CHECK (disciplina >= 0 AND disciplina <= 10),
+    apresentacao_pessoal NUMERIC(3,1) CHECK (apresentacao_pessoal >= 0 AND apresentacao_pessoal <= 10),
+    lideranca NUMERIC(3,1) CHECK (lideranca >= 0 AND lideranca <= 10),
+    iniciativa NUMERIC(3,1) CHECK (iniciativa >= 0 AND iniciativa <= 10),
+    adaptabilidade NUMERIC(3,1) CHECK (adaptabilidade >= 0 AND adaptabilidade <= 10),
+    comunicacao_oral_escrita NUMERIC(3,1) CHECK (comunicacao_oral_escrita >= 0 AND comunicacao_oral_escrita <= 10),
+    relacionamento_ambiente_trabalho NUMERIC(3,1) CHECK (relacionamento_ambiente_trabalho >= 0 AND relacionamento_ambiente_trabalho <= 10),
+    
+    -- Campos de Texto
+    justificativa TEXT,
+    conceito_moral TEXT,
+    conceito_professional TEXT,
+    
+    -- Chaves Estrangeiras e Regras de Integridade
+    CONSTRAINT fk_avaliacao_avaliado FOREIGN KEY (avaliado_id) REFERENCES tb_avaliados(id),
+    CONSTRAINT fk_avaliacao_avaliador FOREIGN KEY (avaliador_id) REFERENCES tb_users(id),
+    CONSTRAINT fk_avaliacao_processo FOREIGN KEY (processo_id) REFERENCES tb_processos(id),
+    
+    -- Garante que um militar só tenha uma avaliação por processo/ano
+    CONSTRAINT uk_avaliado_por_processo UNIQUE (avaliado_id, processo_id)
+);
+
+-- Tabela de Nivelamentos (Revisão pelo Comando)
+CREATE TABLE tb_nivelamentos (
+    id BIGSERIAL PRIMARY KEY,
+    avaliacao_id BIGINT NOT NULL UNIQUE, -- Relacionamento 1:1 com a Avaliação Original
+    comando_id BIGINT NOT NULL,
+    
+    -- Campos de Conceito Reavaliados (Notas de 0 a 10)
+    qualidade_trabalho NUMERIC(3,1) CHECK (qualidade_trabalho >= 0 AND qualidade_trabalho <= 10),
+    produtividade_trabalho NUMERIC(3,1) CHECK (produtividade_trabalho >= 0 AND produtividade_trabalho <= 10),
+    conhecimento_profissional NUMERIC(3,1) CHECK (conhecimento_profissional >= 0 AND conhecimento_profissional <= 10),
+    eficiencia_trabalho NUMERIC(3,1) CHECK (eficiencia_trabalho >= 0 AND eficiencia_trabalho <= 10),
+    meios_materiais NUMERIC(3,1) CHECK (meios_materiais >= 0 AND meios_materiais <= 10),
+    planejamento NUMERIC(3,1) CHECK (planejamento >= 0 AND planejamento <= 10),
+    julgamento NUMERIC(3,1) CHECK (julgamento >= 0 AND julgamento <= 10),
+    responsabilidade NUMERIC(3,1) CHECK (responsabilidade >= 0 AND responsabilidade <= 10),
+    disciplina NUMERIC(3,1) CHECK (disciplina >= 0 AND disciplina <= 10),
+    apresentacao_pessoal NUMERIC(3,1) CHECK (apresentacao_pessoal >= 0 AND apresentacao_pessoal <= 10),
+    lideranca NUMERIC(3,1) CHECK (lideranca >= 0 AND lideranca <= 10),
+    iniciativa NUMERIC(3,1) CHECK (iniciativa >= 0 AND iniciativa <= 10),
+    adaptabilidade NUMERIC(3,1) CHECK (adaptabilidade >= 0 AND adaptabilidade <= 10),
+    comunicacao_oral_escrita NUMERIC(3,1) CHECK (comunicacao_oral_escrita >= 0 AND comunicação_oral_escrita <= 10),
+    relacionamento_ambiente_trabalho NUMERIC(3,1) CHECK (relacionamento_ambiente_trabalho >= 0 AND relacionamento_ambiente_trabalho <= 10),
+    
+    -- Campos de Texto (Justificativa é obrigatória via validação de software se houver alteração)
+    justificativa TEXT, 
+    conceito_moral TEXT,
+    conceito_professional TEXT,
+    
+    -- Chaves Estrangeiras
+    CONSTRAINT fk_nivelamento_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES tb_avaliacoes(id) ON DELETE CASCADE,
+    CONSTRAINT fk_nivelamento_comando FOREIGN KEY (comando_id) REFERENCES tb_users(id)
+);

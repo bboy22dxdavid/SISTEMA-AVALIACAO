@@ -14,15 +14,16 @@ public class Avaliacao {
 
     @ManyToOne
     @JoinColumn(name = "avaliado_id", nullable = false)
-    private Avaliado avaliado;
+    private Avaliado avaliado;// Relacionamento com o militar
+
+    @ManyToOne
+    @JoinColumn(name = "processo_id")
+    private Processo processo; // Relacionamento com o ano vigente
 
     @ManyToOne
     @JoinColumn(name = "avaliador_id", nullable = false)
     private User avaliador;
 
-    @ManyToOne
-    @JoinColumn(name = "processo_id", nullable = false)
-    private Processo processo;
 
     // --- Os 15 Critérios Técnicos de Avaliação (Notas 0 a 10) ---
     @Column(name = "qualidade_trabalho", nullable = false)

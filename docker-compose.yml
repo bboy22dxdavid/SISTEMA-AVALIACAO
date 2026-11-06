@@ -1,5 +1,3 @@
- version: '3.8'
-
 services:
   # --- BANCO DE DADOS (PostgreSQL) ---
   avaliacaodb:
@@ -8,14 +6,13 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER=sang
-      POSTGRES_PASSWORD=sang
-      POSTGRES_DB=avaliacao
+      POSTGRES_USER: sang
+      POSTGRES_PASSWORD: sang
+      POSTGRES_DB: avaliacao
     networks:
       - sang-network 
     volumes:
       - pgdata:/var/lib/postgresql/data
-   
 
   # --- GERENCIADOR DO BANCO (pgAdmin) ---
   pgadmin:
@@ -24,14 +21,12 @@ services:
     ports:
       - "15432:80"
     environment:
-      - PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD: admin
-    
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       - avaliacaodb
     networks:
-      sang-network
-   
+      - sang-network
 
   # --- BACK-END (Spring Boot - Java 21) ---
   backend:
@@ -40,11 +35,11 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_avaliacao
-      - SPRING_DATASOURCE_USERNAME=sang
-      - SPRING_DATASOURCE_PASSWORD=sang
+      SPRING_DATASOURCE_URL: jdbc:postgresql://avaliacaodb:5432/avaliacao
+      SPRING_DATASOURCE_USERNAME: sang
+      SPRING_DATASOURCE_PASSWORD: sang
     depends_on:
-      - db
+      - avaliacaodb
     networks:
       - sang-network
 
