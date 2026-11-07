@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc // Configura o MockMvc para simular requisições HTTP
 public class UserControllerTest {
 
-    @Autowired
+    //@Autowired
     private MockMvc mockMvc;
 
 

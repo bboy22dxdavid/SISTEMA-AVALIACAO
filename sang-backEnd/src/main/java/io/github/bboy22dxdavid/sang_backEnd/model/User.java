@@ -1,15 +1,17 @@
 package io.github.bboy22dxdavid.sang_backEnd.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "tb_users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, unique = true)
@@ -18,29 +20,44 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, unique = true)
+    private String saram;
+
+    @Column(name = "nguerra", nullable = false)
+    private String nguerra;
+
+    @Column(nullable = false)
+    private String secao;
+
+    @Column(name = "cod_posto", nullable = false)
+    private String codposto;
+
+    @Column(nullable = false)
+    private String posto;
+
+    @Column(nullable = false)
+    private String quadro;
+
+    @Column(nullable = false)
+    private String funcao;
+
+    @Column(nullable = false)
+    private Integer antiguidade;
+
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     // Relacionamento Manual: Salvamos apenas o ID numérico da Role física do banco
-    @Column(name = "role_id")
-    private Integer roleId;
+    // FetchType.EAGER explicitado e referencedColumnName garantindo o vínculo exato com o UUID de Role
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role role;
 
     // Construtores
     public User() {}
 
-    public User(String username, String password, Integer roleId) {
-        this.username = username;
-        this.password = password;
-        this.roleId = roleId;
-    }
+
 
     // Construtores, Getters e Setters Manuais
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-    public Integer getRoleId() { return roleId; }
-    public void setRoleId(Integer roleId) { this.roleId = roleId; }
 }

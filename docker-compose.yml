@@ -1,7 +1,7 @@
 services:
   # --- BANCO DE DADOS (PostgreSQL) ---
   avaliacaodb:
-    image: postgres:16.3
+    image: postgres:16-alpine
     container_name: sang-postgres
     ports:
       - "5433:5432"
@@ -13,6 +13,8 @@ services:
       - sang-network 
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d # 👈 Garante o mesmo banco nas 2 máquinas
+  
 
   # --- GERENCIADOR DO BANCO (pgAdmin) ---
   pgadmin:

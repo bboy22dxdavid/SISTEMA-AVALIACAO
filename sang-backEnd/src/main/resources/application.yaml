@@ -6,3 +6,5 @@ spring:
 
 
 # --- CONEXÃO COM O BANCO DE DADOS (POSTGRESQL) ---
+server:
+  port: 8081

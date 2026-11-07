@@ -13,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     // Método indispensável para a futura tela de login do sistema
     Optional<User> findByUsername(String username);
+    Optional<User> findBySaram(String saram);
 }

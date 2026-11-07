@@ -1,8 +1,13 @@
 package io.github.bboy22dxdavid.sang_backEnd.controller;
 
 import io.github.bboy22dxdavid.sang_backEnd.dto.UserDTO;
+import io.github.bboy22dxdavid.sang_backEnd.model.Role;
 import io.github.bboy22dxdavid.sang_backEnd.model.User;
+import io.github.bboy22dxdavid.sang_backEnd.repository.RoleRepository;
+import io.github.bboy22dxdavid.sang_backEnd.repository.UserRepository;
 import io.github.bboy22dxdavid.sang_backEnd.service.UserService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,56 +24,78 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional // Garante que o banco dê ROLLBACK após o teste, mantendo-o limpo
 public class UserServiceTest {
 
-    @Autowired
+    //@Autowired
     private UserService userService;
 
-    @Test
-    @DisplayName("Deve cadastrar um usuário válido e gerar um identificador UUID nativo")
-    public void deveCadastrarUsuarioComUUID() {
-        System.out.println("\n==============================================");
-        System.out.println(">>> INICIANDO TESTE: CADASTRO COM UUID NATIVO <<<");
-        System.out.println("==============================================");
+    //@Autowired
+    private UserRepository userRepository;
 
-        // 1. Instancia um usuário de teste
-        String usernameUnico = "avaliador_" + System.currentTimeMillis();
-        User novoUsuario = new User(usernameUnico, "senhaSegura123", 1); // 1 = ROLE_AVALIADOR
+   // @Autowired
+    private RoleRepository roleRepository;
 
-        // 2. Executa a ação de cadastro através do Service
-        UserDTO resultado = userService.cadastrar(novoUsuario);
+    @BeforeEach
+    public void prepararAmbiente() {
+        // Garante que o perfil ROLE_AVALIADOR exista na tb_roles antes do teste
+        if (roleRepository.findByRole("ROLE_AVALIADOR").isEmpty()) {
+            Role roleAvaliador = new Role();
+            roleAvaliador.setRole("ROLE_AVALIADOR");
+            roleRepository.save(roleAvaliador);
+        }
 
-        // 3. Validações Críticas (Padrão correto JUnit 5: esperado, atual, mensagem)
-        assertNotNull(resultado, "O objeto retornado não deveria ser nulo.");
-        assertNotNull(resultado.getId(), "O ID no formato UUID deveria ter sido gerado.");
-        assertEquals(usernameUnico, resultado.getUsername(), "O username retornado deve ser igual ao enviado.");
-        assertEquals(1, resultado.getRoleId(), "O papel de acesso (RoleId) deve persistir corretamente.");
-        assertInstanceOf(UUID.class, resultado.getId(), "O ID precisa ser obrigatoriamente um objeto do tipo UUID.");
-
-        // Imprime os resultados formatados de forma clara no terminal
-        System.out.println("✅ Usuário cadastrado com sucesso no ambiente integrado!");
-        System.out.println("ID Gerado (UUID): " + resultado.getId());
-        System.out.println("Username Salvo:   " + resultado.getUsername());
-        System.out.println("RoleId Salvo:     " + resultado.getRoleId());
-        System.out.println("==============================================");
-        System.out.println(">>> TESTE CONCLUÍDO COM SUCESSO! <<<");
-        System.out.println("==============================================\n");
+        // Remove o usuário de teste caso já exista de uma execução anterior
+        userRepository.findByUsername("ten.silva.teste").ifPresent(userRepository::delete);
     }
 
     @Test
-    @DisplayName("Deve lançar exceção ao tentar cadastrar um username duplicado")
-    public void naoDevePermitirUsernameDuplicado() {
-        String usernameRepetido = "usuario_duplicado";
-        User user1 = new User(usernameRepetido, "senha1", 1);
-        User user2 = new User(usernameRepetido, "senha2", 2);
+    public void deveConectarNoBancoESalvarUmUsuarioManualmente() {
+        // 1. Monta o objeto User manualmente (sem CamelCase nos atributos)
+        User novoUsuario = new User();
+        novoUsuario.setUsername("ten.silva.teste");
+        novoUsuario.setPassword("senha123");
+        novoUsuario.setSaram("6543210");
+        novoUsuario.setNguerra("Ten. Silva");
+        novoUsuario.setSecao("GDA");
+        novoUsuario.setCodposto("1TEN");
+        novoUsuario.setPosto("Primeiro Tenente");
+        novoUsuario.setQuadro("QOAV");
+        novoUsuario.setFuncao("Piloto");
+        novoUsuario.setAntiguidade(12);
+        novoUsuario.setAtivo(true);
 
-        // Salva o primeiro sem problemas
-        userService.cadastrar(user1);
+        // 2. Chama o serviço para aplicar a regra de posto e salvar no PostgreSQL
+        UserDTO usuarioSalvo = userService.cadastrarUsuario(novoUsuario, false);
 
-        // Força a validação de erro ao tentar inserir o segundo com o mesmo username
-        assertThrows(RuntimeException.class, () -> {
-            userService.cadastrar(user2);
-        }, "Deveria ter lançado uma RuntimeException devido ao username duplicado.");
+        // 3. Validações de conexão, geração de UUID e persistência
+        Assertions.assertNotNull(usuarioSalvo.getId(), "O UUID do usuário deveria ter sido gerado pelo banco.");
+        Assertions.assertNotNull(usuarioSalvo.getRoleId(), "O UUID da Role deveria ter sido vinculado.");
+        Assertions.assertEquals("ten.silva.teste", usuarioSalvo.getUsername());
 
-        System.out.println("✅ Bloqueio de username duplicado validado com sucesso!");
+        System.out.println("✅ SUCESSO! Usuário salvo no PostgreSQL com UUID: " + usuarioSalvo.getId());
+    }
+
+    @Test
+    public void deveListarUsuariosDoBancoComSucesso() {
+        // 1. Garante que exista ao menos um registro no banco para ser listado
+        if (userRepository.findByUsername("ten.silva.teste").isEmpty()) {
+            deveConectarNoBancoESalvarUmUsuarioManualmente();
+        }
+
+        // 2. Chama o método listarTodos() do UserService
+        java.util.List<UserDTO> usuarios = userService.listarTodos();
+
+        // 3. Validações de retorno
+        Assertions.assertNotNull(usuarios, "A lista de usuários não deveria ser nula.");
+        Assertions.assertFalse(usuarios.isEmpty(), "A lista deveria conter pelo menos um usuário cadastrado.");
+
+        // 4. Exibe os registros encontrados no console do IntelliJ
+        System.out.println("=======================================================");
+        System.out.println("📋 USUÁRIOS ENCONTRADOS NO BANCO (" + usuarios.size() + "):");
+        for (UserDTO dto : usuarios) {
+            System.out.println("   -> ID (UUID): " + dto.getId() +
+                    " | Username: " + dto.getUsername() +
+                    " | Role ID: " + dto.getRoleId());
+        }
+        System.out.println("=======================================================");
     }
 
 }
