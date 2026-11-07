@@ -10,51 +10,37 @@ import java.util.UUID;
 @Table(name = "tb_avaliados")
 public class Avaliado {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "saram", nullable = false, unique = true)
     private String saram;
 
     @Column(name = "nguerra", nullable = false)
-    private String nGuerra;
+    private String nguerra;
 
-    @Column(nullable = false)
+    @Column(name = "secao", nullable = false)
     private String secao;
 
     @Column(name = "cod_posto", nullable = false)
-    private String codPosto;
+    private String codposto;
 
-    @Column(nullable = false)
+    @Column(name = "posto", nullable = false)
     private String posto;
 
-    @Column(nullable = false)
+    @Column(name = "quadro", nullable = false)
     private String quadro;
 
-    @Column(nullable = false)
+    @Column(name = "funcao", nullable = false)
     private String funcao;
 
-    @Column(nullable = false)
+    @Column(name = "antiguidade", nullable = false)
     private Integer antiguidade;
 
-    @Column(nullable = false)
+    @Column(name = "ativo", nullable = false)
     private Boolean ativo = true;
 
-    // Construtores
+    //construtor
     public Avaliado() {}
 
-    public Avaliado(UUID id, Boolean ativo, Integer antiguidade, String quadro, String funcao, String posto,
-                    String codPosto, String secao, String nGuerra, String saram) {
-        this.id = id;
-        this.ativo = ativo;
-        this.antiguidade = antiguidade;
-        this.quadro = quadro;
-        this.funcao = funcao;
-        this.posto = posto;
-        this.codPosto = codPosto;
-        this.secao = secao;
-        this.nGuerra = nGuerra;
-        this.saram = saram;
-    }
 }
