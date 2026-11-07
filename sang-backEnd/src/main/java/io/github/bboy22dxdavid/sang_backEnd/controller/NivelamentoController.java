@@ -6,35 +6,46 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/nivelamento")
 @CrossOrigin(origins = "*")// Permite a comunicação direta com o Angular
 public class NivelamentoController {
-    //Mapeia o endpoint /api/nivelamento
+
 
     //intancia do NivelamentoService
     private final NivelamentoService service;
 
-    // construtor que recebe a NivelamentoService
     public NivelamentoController(NivelamentoService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Nivelamento> criarNivelamento(@RequestBody Nivelamento nivelamento) {
-        Nivelamento salvo = service.salvarNivelamento(nivelamento);
+    public ResponseEntity<Nivelamento> criar(@RequestBody Nivelamento nivelamento) {
+        Nivelamento salvo = service.salvar(nivelamento);
         return new ResponseEntity<>(salvo, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Nivelamento>> listar() {
+        return ResponseEntity.ok(service.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Nivelamento> buscarPorId(@PathVariable("id") String id) {
+        return ResponseEntity.ok(service.buscarPorId(UUID.fromString(id)));
+    }
+
     @GetMapping("/avaliacao/{avaliacaoId}")
-    public ResponseEntity<Nivelamento> buscarPorAvaliacao(@PathVariable Long avaliacaoId) {
-        Nivelamento nivelamento = service.buscarPorAvaliacao(avaliacaoId);
-        return ResponseEntity.ok(nivelamento);
+    public ResponseEntity<Nivelamento> buscarPorAvaliacao(@PathVariable("avaliacaoId") String avaliacaoId) {
+        return ResponseEntity.ok(service.buscarPorAvaliacao(UUID.fromString(avaliacaoId)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
+    public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
+        service.deletar(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }
 }
