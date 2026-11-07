@@ -3,85 +3,85 @@ package io.github.bboy22dxdavid.sang_backEnd.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Entity
 @Table(name = "tb_avaliacoes")
 public class Avaliacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "avaliado_id", nullable = false)
-    private Avaliado avaliado;// Relacionamento com o militar
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "avaliado_id", referencedColumnName = "id", nullable = false)
+    private Avaliado avaliado;
 
-    @ManyToOne
-    @JoinColumn(name = "processo_id")
-    private Processo processo; // Relacionamento com o ano vigente
-
-    @ManyToOne
-    @JoinColumn(name = "avaliador_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "avaliador_id", referencedColumnName = "id", nullable = false)
     private User avaliador;
 
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "processo_id", referencedColumnName = "id", nullable = false)
+    private Processo processo;
 
-    // --- Os 15 Critérios Técnicos de Avaliação (Notas 0 a 10) ---
+    // --- 15 Critérios Técnicos (Notas de 0 a 10) ---
     @Column(name = "qualidade_trabalho", nullable = false)
-    private Integer qualidadeTrabalho;
+    private Integer qualidadetrabalho;
 
     @Column(name = "produtividade_trabalho", nullable = false)
-    private Integer produtividadeTrabalho;
+    private Integer produtividadetrabalho;
 
     @Column(name = "conhecimento_profissional", nullable = false)
-    private Integer conhecimentoProfissional;
+    private Integer conhecimentoprofissional;
 
     @Column(name = "eficiencia_trabalho", nullable = false)
-    private Integer eficienciaTrabalho;
+    private Integer eficienciatrabalho;
 
     @Column(name = "meios_materiais", nullable = false)
-    private Integer meiosMateriais;
+    private Integer meiosmateriais;
 
-    @Column(nullable = false)
+    @Column(name = "planejamento", nullable = false)
     private Integer planejamento;
 
-    @Column(nullable = false)
+    @Column(name = "julgamento", nullable = false)
     private Integer julgamento;
 
-    @Column(nullable = false)
+    @Column(name = "responsabilidade", nullable = false)
     private Integer responsabilidade;
 
-    @Column(nullable = false)
+    @Column(name = "disciplina", nullable = false)
     private Integer disciplina;
 
     @Column(name = "apresentacao_pessoal", nullable = false)
-    private Integer apresentacaoPessoal;
+    private Integer apresentacaopessoal;
 
-    @Column(nullable = false)
+    @Column(name = "lideranca", nullable = false)
     private Integer lideranca;
 
-    @Column(nullable = false)
+    @Column(name = "iniciativa", nullable = false)
     private Integer iniciativa;
 
-    @Column(nullable = false)
+    @Column(name = "adaptabilidade", nullable = false)
     private Integer adaptabilidade;
 
     @Column(name = "comunicacao_oral_escrita", nullable = false)
-    private Integer comunicacaoOralEscrita;
+    private Integer comunicacaooralescrita;
 
     @Column(name = "relacionamento_ambiente_trabalho", nullable = false)
-    private Integer relacionamentoAmbienteTrabalho;
+    private Integer relacionamentoambientetrabalho;
 
     // --- Pareceres Descritivos ---
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "justificativa", columnDefinition = "TEXT")
     private String justificativa;
 
     @Column(name = "conceito_moral", columnDefinition = "TEXT")
-    private String conceitoMoral;
+    private String conceitomoral;
 
     @Column(name = "conceito_profissional", columnDefinition = "TEXT")
-    private String conceitoProfissional;
+    private String conceitoprofissional;
 
-    // Construtor Padrão
     public Avaliacao() {}
 
 

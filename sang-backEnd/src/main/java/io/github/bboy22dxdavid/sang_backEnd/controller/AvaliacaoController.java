@@ -7,18 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/avaliacao")
 @CrossOrigin(origins = "*") // Permite a comunicação direta com o Angular
 public class AvaliacaoController {
-    //Mapeia o endpoint /api/avaliacao
 
-    //intancia do AvaliacaoService
     private final AvaliacaoService service;
 
-
-    // construtor que recebe a AvaliacaoService
     public AvaliacaoController(AvaliacaoService service) {
         this.service = service;
     }
@@ -34,14 +31,19 @@ public class AvaliacaoController {
         return ResponseEntity.ok(service.listarTodas());
     }
 
+    @GetMapping("/processo/{processoId}")
+    public ResponseEntity<List<Avaliacao>> listarPorProcesso(@PathVariable("processoId") String processoId) {
+        return ResponseEntity.ok(service.listarPorProcesso(UUID.fromString(processoId)));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Avaliacao> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(service.buscarPorId(id));
+    public ResponseEntity<Avaliacao> buscarPorId(@PathVariable("id") String id) {
+        return ResponseEntity.ok(service.buscarPorId(UUID.fromString(id)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
-        return ResponseEntity.noContent().build(); // Retorna o status HTTP 204 (No Content) de sucesso
+    public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
+        service.deletar(UUID.fromString(id));
+        return ResponseEntity.noContent().build();
     }
 }
