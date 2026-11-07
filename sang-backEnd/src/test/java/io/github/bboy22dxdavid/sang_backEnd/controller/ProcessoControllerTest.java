@@ -2,7 +2,6 @@ package io.github.bboy22dxdavid.sang_backEnd.controller;
 
 
 import io.github.bboy22dxdavid.sang_backEnd.model.Avaliacao;
-import io.github.bboy22dxdavid.sang_backEnd.model.Role;
 import io.github.bboy22dxdavid.sang_backEnd.model.User;
 import io.github.bboy22dxdavid.sang_backEnd.repository.AvaliacaoRepository;
 import io.github.bboy22dxdavid.sang_backEnd.repository.ProcessoRepository;
@@ -15,19 +14,18 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test") // DIZ AO SPRING PARA USAR AS CONFIGURAÇÕES DO APPLICATION-TEST.YML
 public class ProcessoControllerTest {
-    @Autowired
+    //@Autowired
     private ProcessoRepository repository;
 
     private ProcessoService service;
 
-    @Autowired
+    //@Autowired
     private AvaliacaoRepository repositoryAv; // Garanta que o tipo aqui é AvaliacaoRepository
 
     @Test

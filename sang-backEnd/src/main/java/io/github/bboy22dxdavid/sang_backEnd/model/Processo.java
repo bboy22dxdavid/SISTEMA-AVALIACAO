@@ -3,6 +3,8 @@ package io.github.bboy22dxdavid.sang_backEnd.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 /* ===============================================
 * Classe que representa a tabela no banco Processo
 * ===============================================
@@ -14,9 +16,8 @@ import lombok.Data;
 public class Processo {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private Integer ano;
@@ -26,7 +27,8 @@ public class Processo {
 
 
     // Construtor Completo
-    public Processo(String id, Integer ano) {
+
+    public Processo(UUID id, Integer ano) {
         this.id = id;
         this.ano = ano;
     }

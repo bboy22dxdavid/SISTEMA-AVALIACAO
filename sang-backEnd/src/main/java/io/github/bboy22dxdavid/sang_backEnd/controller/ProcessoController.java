@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /* =========================================================
  * class ProcessoController camada de entrada dos endpoints
@@ -22,8 +23,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")//Permite que o Angular acesse o Back-end futuramente
 public class ProcessoController {
 
-    @Autowired
-    private ProcessoService service;
+    //@Autowired
+    private final ProcessoService service;
 
     public ProcessoController(ProcessoService service) {
         this.service = service;
@@ -43,18 +44,18 @@ public class ProcessoController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Processo> buscar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.buscarPorId(id));
+    public ResponseEntity<Processo> buscarPorId(@PathVariable("id")  String id) {
+        return ResponseEntity.ok(service.buscarPorId(UUID.fromString(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Processo> atualizar(@PathVariable Long id, @Valid @RequestBody Processo processo) {
-        return ResponseEntity.ok(service.atualizar(id, processo));
+    public ResponseEntity<Processo> atualizar(@PathVariable ("id") String id, @RequestBody Processo processo) {
+        return ResponseEntity.ok(service.atualizar(UUID.fromString(id), processo));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
+    public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
+        service.deletar(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }
 }
