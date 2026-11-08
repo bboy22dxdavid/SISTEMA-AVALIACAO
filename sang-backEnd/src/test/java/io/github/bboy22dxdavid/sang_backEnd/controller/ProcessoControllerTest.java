@@ -37,19 +37,19 @@ public class ProcessoControllerTest {
         lista.forEach(avaliacao -> {
             // Calcula a média das 15 notas
             double media = (
-                    avaliacao.getQualidadeTrabalho() + avaliacao.getProdutividadeTrabalho() +
-                            avaliacao.getConhecimentoProfissional() + avaliacao.getEficienciaTrabalho() +
-                            avaliacao.getMeiosMateriais() + avaliacao.getPlanejamento() +
+                    avaliacao.getQualidadetrabalho() + avaliacao.getProdutividadetrabalho() +
+                            avaliacao.getConhecimentoprofissional() + avaliacao.getEficienciatrabalho() +
+                            avaliacao.getMeiosmateriais() + avaliacao.getPlanejamento() +
                             avaliacao.getJulgamento() + avaliacao.getResponsabilidade() +
-                            avaliacao.getDisciplina() + avaliacao.getApresentacaoPessoal() +
+                            avaliacao.getDisciplina() + avaliacao.getApresentacaopessoal() +
                             avaliacao.getLideranca() + avaliacao.getIniciativa() +
-                            avaliacao.getAdaptabilidade() + avaliacao.getComunicacaoOralEscrita() +
-                            avaliacao.getRelacionamentoAmbienteTrabalho()
+                            avaliacao.getAdaptabilidade() + avaliacao.getComunicacaooralescrita() +
+                            avaliacao.getRelacionamentoambientetrabalho()
             ) / 15.0;
 
             // Imprime no console os dados do militar e a nota final do ranking
             System.out.printf("Militar: %s (%s) | Ano: %d | Nota Final Ranking: %.2f%n",
-                    avaliacao.getAvaliado().getNGuerra(),
+                    avaliacao.getAvaliado().getNguerra(),
                     avaliacao.getAvaliado().getPosto(),
                     avaliacao.getProcesso().getAno(),
                     media

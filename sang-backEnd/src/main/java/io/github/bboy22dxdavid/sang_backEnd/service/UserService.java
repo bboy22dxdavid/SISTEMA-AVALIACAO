@@ -5,6 +5,7 @@ import io.github.bboy22dxdavid.sang_backEnd.model.Role;
 import io.github.bboy22dxdavid.sang_backEnd.model.User;
 import io.github.bboy22dxdavid.sang_backEnd.repository.RoleRepository;
 import io.github.bboy22dxdavid.sang_backEnd.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +18,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDTO cadastrarUsuario(User user, boolean autorizarGraduadoAvaliador) {
@@ -44,6 +49,9 @@ public class UserService {
         if (user.getAtivo() == null) {
             user.setAtivo(true);
         }
+
+        //Criptografa a senha antes de gravar no PostgreSQL
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User usuarioSalvo = userRepository.save(user);
         return converterParaDTO(usuarioSalvo);
