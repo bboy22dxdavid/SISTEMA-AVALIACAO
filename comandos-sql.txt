@@ -3,16 +3,27 @@
 -- =========================================================================
 
 -- Tabela de Papéis de Acesso (Roles)
-CREATE TABLE tb_roles (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS public.tb_roles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Tabela de Usuários (Avaliadores / Administradores / Comando)
-CREATE TABLE tb_users (
-    id BIGSERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS public.tb_users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    saram VARCHAR(20) NOT NULL UNIQUE,
+    nguerra VARCHAR(100) NOT NULL,
+    secao VARCHAR(100) NOT NULL,
+    cod_posto VARCHAR(10) NOT NULL,
+    posto VARCHAR(50) NOT NULL,
+    quadro VARCHAR(50) NOT NULL,
+    funcao VARCHAR(100) NOT NULL,
+    antiguidade INT NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    role_id UUID NOT NULL,
+    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES public.tb_roles(id)
 );
 
 -- Tabela de Dados Militares dos Avaliados

@@ -38,3 +38,8 @@ netstart -aof | findstr 5433
 
 Na raiz do projeto baixado, execute o comando mágico do Docker que vai ler o arquivo que você criou, baixar as imagens corretas, criar a network e iniciar os servidores automaticamente:bash
 docker compose up -d
+
+===================================================================
+Como sincronizar as duas máquinas: 
+Na máquina que estiver desatualizada, rode -> docker compose down -v //(apaga o volume antigo divergente) 
+e depois  -> docker compose up -d. //Ambas passarão a ter o banco idêntico.
