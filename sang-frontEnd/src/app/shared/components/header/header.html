@@ -1,0 +1,45 @@
+@if (authService.isAuthenticated()) {
+  <mat-toolbar class="header-sang">
+    <div class="brand" routerLink="/ranking">
+      <mat-icon class="brand-icon">flight</mat-icon>
+      <span class="brand-title">SANG</span>
+    </div>
+
+    <nav class="nav-links">
+      <a mat-button routerLink="/ranking" routerLinkActive="link-ativo">
+        <mat-icon>leaderboard</mat-icon>
+        Ranking
+      </a>
+
+      <a mat-button routerLink="/avaliados/novo" routerLinkActive="link-ativo">
+        <mat-icon>group_add</mat-icon>
+        Cadastrar Avaliado
+      </a>
+
+      <a mat-button routerLink="/usuarios/novo" routerLinkActive="link-ativo">
+        <mat-icon>person_add</mat-icon>
+        Cadastrar Usuário
+      </a>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <div class="user-menu">
+      <span class="perfil-badge">{{ labelPerfil }}</span>
+
+      <button mat-button [matMenuTriggerFor]="menuPerfil" class="btn-perfil">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ authService.getAuthData()?.username }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #menuPerfil="matMenu">
+        <button mat-menu-item (click)="sair()">
+          <mat-icon color="warn">logout</mat-icon>
+          <span>Sair do Sistema</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+}
+

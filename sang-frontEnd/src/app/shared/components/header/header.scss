@@ -1,0 +1,84 @@
+.header-sang {
+  background-color: var(--cor-primaria-escura, #103349) !important;
+  color: var(--cor-branco, #ffffff) !important;
+  box-shadow: 0 3px 10px rgba(16, 51, 73, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-right: 32px;
+
+  .brand-icon {
+    color: var(--cor-destaque-laranja, #ff5000);
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+
+  a {
+    color: var(--cor-branco, #ffffff) !important;
+    font-weight: 400;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--cor-primaria-media, #4b6f85);
+    }
+  }
+
+  .link-ativo {
+    background-color: var(--cor-primaria-media, #4b6f85) !important;
+    border-bottom: 3px solid var(--cor-destaque-laranja, #ff5000);
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .perfil-badge {
+    background-color: rgba(143, 179, 215, 0.2);
+    border: 1px solid var(--cor-secundaria-clara, #8fb3d7);
+    color: var(--cor-secundaria-clara, #8fb3d7);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .btn-perfil {
+    color: var(--cor-branco, #ffffff) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-badge {
+    display: none;
+  }
+  .header-sang {
+    padding: 0 12px;
+  }
+}

@@ -1,7 +1,8 @@
 
-
-<main class="main">
-       <mat-toolbar color="primary">sistema de avaliação de desempenho</mat-toolbar>
-</main>
-
-<router-outlet />
+<div class="app-wrapper">
+  <app-header></app-header>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer></app-footer>
+</div>
