@@ -1,0 +1,9 @@
+/* Importa o tema oficial azul institucional do Angular Material */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f4f6f9;
+}

@@ -1,0 +1,78 @@
+<div class="cadastro-container">
+  <mat-card class="cadastro-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">person_add</mat-icon>
+      <mat-card-title>Cadastro de Usuário do Sistema</mat-card-title>
+      <mat-card-subtitle>Avaliadores, Revisores e Graduados Autorizados</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="cadastroForm" (ngSubmit)="salvar()" class="grid-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Posto / Graduação</mat-label>
+          <mat-select formControlName="codposto" (selectionChange)="aoSelecionarPosto($event.value)">
+            @for (p of postos; track p.cod) {
+              <mat-option [value]="p.cod">{{ p.cod }} - {{ p.nome }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome de Guerra</mat-label>
+          <input matInput formControlName="nguerra" placeholder="Ex: Cap. Mendes" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>SARAM</mat-label>
+          <input matInput formControlName="saram" placeholder="Ex: 7000001" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Seção</mat-label>
+          <input matInput formControlName="secao" placeholder="Ex: A-INT" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Quadro</mat-label>
+          <input matInput formControlName="quadro" placeholder="Ex: QOAV / BMA" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Função</mat-label>
+          <input matInput formControlName="funcao" placeholder="Ex: Chefe de Seção" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Antiguidade (Numérica)</mat-label>
+          <input matInput type="number" formControlName="antiguidade" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Usuário (Login)</mat-label>
+          <input matInput formControlName="username" placeholder="Ex: cap.mendes" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        @if (isGraduadoSelecionado) {
+          <div class="excecao-box span-2">
+            <mat-checkbox formControlName="excecaoGraduado" color="warn">
+              Autorizar exceção: habilitar este Graduado como Avaliador no sistema
+            </mat-checkbox>
+          </div>
+        }
+
+        <div class="acoes span-2">
+          <button mat-stroked-button type="button" routerLink="/login">Voltar ao Login</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="cadastroForm.invalid || carregando">
+            {{ carregando ? 'Salvando...' : 'Cadastrar Usuário' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

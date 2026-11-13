@@ -1,0 +1,45 @@
+.cadastro-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.cadastro-card {
+  width: 100%;
+  max-width: 720px;
+  padding: 16px;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.excecao-box {
+  background-color: #fff3e0;
+  border: 1px solid #ffb74d;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .grid-form {
+    grid-template-columns: 1fr;
+  }
+  .span-2 {
+    grid-column: span 1;
+  }
+}

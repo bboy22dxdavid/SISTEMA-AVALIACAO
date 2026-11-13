@@ -1,0 +1,36 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">military_tech</mat-icon>
+      <mat-card-title>SANG</mat-card-title>
+      <mat-card-subtitle>Sistema de Avaliação e Nivelamento de Graduados</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="entrar()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Usuário (Username)</mat-label>
+          <input matInput formControlName="username" placeholder="Ex: cap.mendes" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input matInput [type]="esconderSenha ? 'password' : 'text'" formControlName="password" />
+          <button mat-icon-button matSuffix type="button" (click)="esconderSenha = !esconderSenha">
+            <mat-icon>{{ esconderSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width btn-entrar" [disabled]="loginForm.invalid || carregando">
+          {{ carregando ? 'Autenticando...' : 'Entrar' }}
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <a mat-button color="accent" routerLink="/usuarios/novo">Cadastrar novo avaliador/revisor</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
