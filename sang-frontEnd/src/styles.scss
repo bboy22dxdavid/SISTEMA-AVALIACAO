@@ -1,9 +1,66 @@
 /* Importa o tema oficial azul institucional do Angular Material */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+/* 1. Variáveis Globais da Paleta DE CORES */
+:root {
+  --cor-primaria-escura: #103349;
+  --cor-primaria-media: #4b6f85;
+  --cor-secundaria-clara: #8fb3d7;
+  --cor-destaque-laranja: #ff5000;
+  --cor-cinza-borda: #abb7be;
+  --cor-branco: #ffffff;
+  --cor-fundo-pagina: #f2f5f8;
+  --cor-texto-principal: #103349;
+
+ /* 2. Sobrescrita dos Tokens do Angular Material (v18/v19+) */
+  --mat-sys-primary: var(--cor-primaria-escura);
+  --mat-sys-on-primary: var(--cor-branco);
+  --mat-sys-primary-container: var(--cor-secundaria-clara);
+  --mat-sys-on-primary-container: var(--cor-primaria-escura);
+
+  --mat-sys-secondary: var(--cor-primaria-media);
+  --mat-sys-on-secondary: var(--cor-branco);
+
+  --mat-sys-tertiary: var(--cor-destaque-laranja);
+  --mat-sys-on-tertiary: var(--cor-branco);
+
+  --mat-sys-outline: var(--cor-cinza-borda);
+  --mat-sys-surface: var(--cor-branco);
+}
+
+
+
+
+
 html, body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f4f6f9;
+  background-color: var(----cor-fundo-pagina);
+  color: var(--cor-texto-principal);
+}
+
+/* 4. Classes Utilitárias de Cores para uso rápido no HTML */
+.toolbar-sang {
+  background-color: var(--cor-primaria-escura) !important;
+  color: var(--cor-branco) !important;
+}
+
+.btn-sang-primary {
+  background-color: var(--cor-primaria-media) !important;
+  color: var(--cor-branco) !important;
+}
+
+.btn-sang-accent {
+  background-color: var(--cor-destaque-laranja) !important;
+  color: var(--cor-branco) !important;
+}
+
+.card-sang {
+  background-color: var(--cor-branco) !important;
+  border-top: 4px solid var(--cor-primaria-escura);
+}
+
+.borda-sutil {
+  border-color: var(--cor-cinza-borda) !important;
 }

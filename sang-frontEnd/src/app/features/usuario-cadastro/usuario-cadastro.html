@@ -1,10 +1,14 @@
 <div class="cadastro-container">
   <mat-card class="cadastro-card">
-    <mat-card-header>
-      <mat-icon mat-card-avatar color="primary">person_add</mat-icon>
-      <mat-card-title>Cadastro de Usuário do Sistema</mat-card-title>
-      <mat-card-subtitle>Avaliadores, Revisores e Graduados Autorizados</mat-card-subtitle>
-    </mat-card-header>
+    <div class="header-centralizado">
+      <div class="icone-wrapper">
+        <mat-icon class="icone-primario">person_add</mat-icon>
+      </div>
+      <h2 class="titulo-primario">Cadastro de Usuário do Sistema</h2>
+      <p class="subtitulo-cadastro">Avaliadores, Revisores e Graduados Autorizados</p>
+    </div>
+
+    <mat-divider class="divisor-sutil"></mat-divider>
 
     <mat-card-content>
       <form [formGroup]="cadastroForm" (ngSubmit)="salvar()" class="grid-form">
@@ -66,8 +70,10 @@
         }
 
         <div class="acoes span-2">
-          <button mat-stroked-button type="button" routerLink="/login">Voltar ao Login</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="cadastroForm.invalid || carregando">
+          <button mat-stroked-button type="button" routerLink="/login" class="btn-voltar">
+            Voltar ao Login
+          </button>
+          <button mat-raised-button type="submit" class="btn-cadastrar" [disabled]="cadastroForm.invalid || carregando">
             {{ carregando ? 'Salvando...' : 'Cadastrar Usuário' }}
           </button>
         </div>
@@ -75,4 +81,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-
