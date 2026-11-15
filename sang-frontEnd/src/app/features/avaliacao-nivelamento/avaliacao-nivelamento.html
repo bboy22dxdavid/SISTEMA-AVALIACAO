@@ -1,1 +1,94 @@
-<p>avaliacao-nivelamento works!</p>
+<div class="ficha-container">
+  <mat-card class="ficha-card" [class.modo-revisao]="modo === 'NIVELAMENTO'">
+
+    <!-- Cabeçalho da Ficha -->
+    <div class="topo-ficha">
+      <div class="titulo-ficha">
+        <mat-icon class="icone-ficha">
+          {{ modo === 'AVALIACAO' ? 'rate_review' : 'gavel' }}
+        </mat-icon>
+        <div>
+          <h2>{{ modo === 'AVALIACAO' ? 'Ficha de Avaliação de Graduado' : 'Nivelamento e Revisão do Comando' }}</h2>
+          @if (militarAvaliado) {
+            <p class="dados-militar">
+              <strong>{{ militarAvaliado.posto }} {{ militarAvaliado.nguerra }}</strong> •
+              SARAM: {{ militarAvaliado.saram }} • Seção: {{ militarAvaliado.secao }} ({{ militarAvaliado.quadro }})
+            </p>
+          }
+        </div>
+      </div>
+
+      <div class="placar-box">
+        <span>Pontuação Total</span>
+        <strong>{{ pontuacaoCalculada }} <small>/ 150</small></strong>
+      </div>
+    </div>
+
+    <mat-divider class="divisor"></mat-divider>
+
+    @if (modo === 'NIVELAMENTO') {
+      <div class="aviso-comando">
+        <mat-icon>warning_amber</mat-icon>
+        <span>Modo Revisão: As notas abaixo foram herdadas da avaliação inicial. Caso altere qualquer pontuação, descreva obrigatoriamente a justificativa no rodapé.</span>
+      </div>
+    }
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="salvar()">
+
+        <!-- Tabela/Lista dos 15 Conceitos -->
+        <div class="lista-criterios">
+          @for (crit of criterios; track crit.campo) {
+            <div class="linha-criterio">
+              <div class="info-criterio">
+                <strong>{{ crit.titulo }}</strong>
+                <small>{{ crit.descricao }}</small>
+              </div>
+
+              <mat-form-field appearance="outline" class="input-nota">
+                <mat-label>Nota (0-10)</mat-label>
+                <input matInput type="number" min="0" max="10" [formControlName]="crit.campo" />
+              </mat-form-field>
+            </div>
+          }
+        </div>
+
+        <mat-divider class="divisor-pareceres"></mat-divider>
+
+        <!-- Pareceres Descritivos -->
+        <div class="pareceres-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Conceito Moral</mat-label>
+            <input matInput formControlName="conceitomoral" placeholder="Ex: Exemplar, Idôneo..." />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Conceito Profissional</mat-label>
+            <input matInput formControlName="conceitoprofissional" placeholder="Ex: Altamente capacitado..." />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="span-2">
+            <mat-label>
+              {{ modo === 'NIVELAMENTO' ? 'Justificativa da Revisão do Comando (Obrigatória)' : 'Justificativa / Parecer Complementar (Opcional)' }}
+            </mat-label>
+            <textarea matInput rows="3" formControlName="justificativa" placeholder="Descreva os fatos observados..."></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="acoes-ficha">
+          <button mat-stroked-button type="button" routerLink="/ranking" class="btn-cancelar">
+            Cancelar e Voltar
+          </button>
+          <button mat-raised-button type="submit"
+                  [class.btn-salvar-avaliacao]="modo === 'AVALIACAO'"
+                  [class.btn-salvar-nivelamento]="modo === 'NIVELAMENTO'"
+                  [disabled]="form.invalid || carregando">
+            {{ carregando ? 'Gravando...' : (modo === 'AVALIACAO' ? 'Finalizar Avaliação' : 'Confirmar Nivelamento') }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

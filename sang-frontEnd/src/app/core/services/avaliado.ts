@@ -22,6 +22,10 @@ export class AvaliadoService  {
     return this.http.get<Avaliado[]>(`${this.apiUrl}/ativos`);
   }
 
+   buscarPorId(id: string): Observable<Avaliado> {
+    return this.http.get<Avaliado>(`${this.apiUrl}/${id}`);
+  }
+
   buscarPorSaram(saram: string): Observable<Avaliado> {
     return this.http.get<Avaliado>(`${this.apiUrl}/saram/${saram}`);
   }
