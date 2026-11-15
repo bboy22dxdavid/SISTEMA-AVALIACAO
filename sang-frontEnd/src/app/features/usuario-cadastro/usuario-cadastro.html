@@ -4,8 +4,10 @@
       <div class="icone-wrapper">
         <mat-icon class="icone-primario">person_add</mat-icon>
       </div>
-      <h2 class="titulo-primario">Cadastro de Usuário do Sistema</h2>
-      <p class="subtitulo-cadastro">Avaliadores, Revisores e Graduados Autorizados</p>
+      <h2 class="titulo-primario">Cadastro de Militar</h2>
+      <p class="subtitulo-cadastro">
+        {{ precisaDeLogin ? 'Acesso ao Sistema (Avaliador / Revisor)' : 'Registro de Graduado para Avaliação' }}
+      </p>
     </div>
 
     <mat-divider class="divisor-sutil"></mat-divider>
@@ -23,7 +25,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Nome de Guerra</mat-label>
-          <input matInput formControlName="nguerra" placeholder="Ex: Cap. Mendes" />
+          <input matInput formControlName="nguerra" placeholder="Ex: 1º Sgt. Almeida" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -33,7 +35,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Seção</mat-label>
-          <input matInput formControlName="secao" placeholder="Ex: A-INT" />
+          <input matInput formControlName="secao" placeholder="Ex: SERIPA" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -43,38 +45,40 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Função</mat-label>
-          <input matInput formControlName="funcao" placeholder="Ex: Chefe de Seção" />
+          <input matInput formControlName="funcao" placeholder="Ex: Mecânico de Voo" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" [class.span-2]="!precisaDeLogin">
           <mat-label>Antiguidade (Numérica)</mat-label>
           <input matInput type="number" formControlName="antiguidade" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Usuário (Login)</mat-label>
-          <input matInput formControlName="username" placeholder="Ex: cap.mendes" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="span-2">
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="password" />
-        </mat-form-field>
-
         @if (isGraduadoSelecionado) {
           <div class="excecao-box span-2">
-            <mat-checkbox formControlName="excecaoGraduado" color="warn">
-              Autorizar exceção: habilitar este Graduado como Avaliador no sistema
+            <mat-checkbox formControlName="excecaoGraduado" color="warn" (change)="aoAlterarExcecao()">
+              Autorizar exceção: habilitar este Graduado também como Avaliador no sistema
             </mat-checkbox>
           </div>
         }
 
+        @if (precisaDeLogin) {
+          <mat-form-field appearance="outline">
+            <mat-label>Usuário (Login)</mat-label>
+            <input matInput formControlName="username" placeholder="Ex: cap.mendes" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="password" />
+          </mat-form-field>
+        }
+
         <div class="acoes span-2">
-          <button mat-stroked-button type="button" routerLink="/login" class="btn-voltar">
-            Voltar ao Login
+          <button mat-stroked-button type="button" routerLink="/ranking" class="btn-voltar">
+            Cancelar
           </button>
           <button mat-raised-button type="submit" class="btn-cadastrar" [disabled]="cadastroForm.invalid || carregando">
-            {{ carregando ? 'Salvando...' : 'Cadastrar Usuário' }}
+            {{ carregando ? 'Salvando...' : 'Salvar Cadastro' }}
           </button>
         </div>
       </form>
