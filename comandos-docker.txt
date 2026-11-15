@@ -40,6 +40,11 @@ Na raiz do projeto baixado, execute o comando mágico do Docker que vai ler o ar
 docker compose up -d
 
 ===================================================================
+
+# Constrói as imagens do Back-end e Front-end e sobe todos os contêineres
+docker compose up --build -d
+
+
 Como sincronizar as duas máquinas: 
 Na máquina que estiver desatualizada, rode -> docker compose down -v //(apaga o volume antigo divergente) 
 e depois  -> docker compose up -d. //Ambas passarão a ter o banco idêntico.

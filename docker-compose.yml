@@ -38,8 +38,9 @@ services:
 
   # --- BACK-END (Spring Boot - Java 21) ---
   backend:
-    build: ./sang-backEnd
-    dockerfile: Dockerfile
+    build: 
+      context: ./sang-backEnd
+      dockerfile: Dockerfile
     container_name: sang-backend
     ports:
       - "8081:8081"
@@ -54,8 +55,9 @@ services:
 
   # --- FRONT-END (Angular) ---
   frontend:
-    build: ./sang-frontEnd
-    dockerfile: Dockerfile
+    build: 
+      context: ./sang-frontEnd
+      dockerfile: Dockerfile
     container_name: sang-frontend
     ports:
       - "4200:80"
