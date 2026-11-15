@@ -1,3 +1,5 @@
+name: sang-sistema
+
 services:
   # --- BANCO DE DADOS (PostgreSQL) ---
   avaliacaodb:
@@ -14,7 +16,11 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./database/init:/docker-entrypoint-initdb.d # 👈 Garante o mesmo banco nas 2 máquinas
-  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fab_user -d db_avaliacao"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # --- GERENCIADOR DO BANCO (pgAdmin) ---
   pgadmin:
@@ -33,6 +39,7 @@ services:
   # --- BACK-END (Spring Boot - Java 21) ---
   backend:
     build: ./sang-backEnd
+    dockerfile: Dockerfile
     container_name: sang-backend
     ports:
       - "8081:8081"
@@ -48,6 +55,7 @@ services:
   # --- FRONT-END (Angular) ---
   frontend:
     build: ./sang-frontEnd
+    dockerfile: Dockerfile
     container_name: sang-frontend
     ports:
       - "4200:80"
