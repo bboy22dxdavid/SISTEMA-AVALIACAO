@@ -6,6 +6,7 @@
   font-size: 0.85rem;
 }
 
+
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -29,4 +30,19 @@
     width: 20px;
     height: 20px;
   }
+
+
+}
+
+.footer-rigth {
+  display: flex;
+  align-items: center;
+  gap: 12px; // Espaço entre a logo e o texto
+}
+
+.footer-logo {
+  width: 40px;
+  max-width: 40px;
+  height: auto;
+  flex-shrink: 0;
 }
