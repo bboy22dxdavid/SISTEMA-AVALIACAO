@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../shared/components/material-module/material-module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { Processo } from '../../shared/models/processo';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { RankingResponse } from '../../shared/models/ranking-response';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   imports: [CommonModule, FormsModule, MaterialModule],
@@ -19,7 +21,7 @@ import { RankingResponse } from '../../shared/models/ranking-response';
   templateUrl: './ranking.html',
 })
 export class Ranking implements OnInit{
-   private processoService = inject(ProcessoService);
+  private processoService = inject(ProcessoService);
   private rankingService = inject(RankingService);
   private avaliadoService = inject(AvaliadoService);
   private authService = inject(AuthService);

@@ -20,8 +20,8 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="campo-busca">
-          <mat-label>Pesquisar Militar (Nome, SARAM ou Seção)</mat-label>
-          <input matInput [(ngModel)]="termoBusca" (keyup)="aplicarFiltro()" placeholder="Ex: Sgt. Almeida" />
+          <mat-label >Pesquisar Militar (Nome ou SARAM)</mat-label>
+          <input matInput [(ngModel)]="termoBusca"  (keyup)="aplicarFiltro()" placeholder="Ex: Sgt. Almeida" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
@@ -130,4 +130,3 @@
     }
   </mat-card>
 </div>
-

@@ -9,7 +9,7 @@
   background-color: var(--cor-branco, #ffffff);
   border-top: 5px solid var(--cor-primaria-escura, #103349);
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(16, 51, 73, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(16, 51, 73, 0.12) ;
 }
 
 .topo-ranking {
@@ -56,12 +56,19 @@
   flex-wrap: wrap;
 
   .campo-processo {
-    width: 150px;
+    width: 185px;
   }
 
   .campo-busca {
-    width: 280px;
+    width: 310px;
   }
+}
+
+.paginador-sang {
+  margin-top: 8px;
+  border-top: 1px solid var(--cor-cinza-borda, #abb7be);
+  background-color: var(--cor-branco, #ffffff);
+  color: var(--cor-primaria-escura, #103349);
 }
 
 .divisor {
@@ -167,13 +174,13 @@
 }
 
 .btn-avaliar {
-  background-color: var(--cor-primaria-media, #4b6f85) !important;
-  color: var(--cor-branco, #ffffff) !important;
+  background-color: var(--cor-primaria-media, #4b6f85) ;
+  color: var(--cor-branco, #ffffff) ;
 }
 
 .btn-nivelar {
-  background-color: var(--cor-destaque-laranja, #ff5000) !important;
-  color: var(--cor-branco, #ffffff) !important;
+  background-color: var(--cor-destaque-laranja, #ff5000) ;
+  color: var(--cor-branco, #ffffff) ;
 }
 
 .texto-concluido {
@@ -190,4 +197,24 @@
   padding: 48px 16px;
   color: var(--cor-primaria-media, #4b6f85);
   gap: 12px;
+}
+.filtros-grupo {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .campo-processo {
+    width: 190px; // Evita cortar o texto "Processo (Ano)"
+  }
+
+  .campo-busca {
+    width: 310px; // Evita sobrepor o texto com o ícone de lupa
+  }
+}
+
+.paginador-sang {
+  margin-top: 8px;
+  border-top: 1px solid var(--cor-cinza-borda, #abb7be);
+  background-color: var(--cor-branco, #ffffff);
+  color: var(--cor-primaria-escura, #103349);
 }
