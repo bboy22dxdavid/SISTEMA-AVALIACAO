@@ -1,0 +1,133 @@
+<div class="ranking-container">
+  <mat-card class="ranking-card">
+    <div class="topo-ranking">
+      <div class="titulo-grupo">
+        <mat-icon class="icone-titulo">leaderboard</mat-icon>
+        <div>
+          <h1 class="titulo-principal">Sistema de Avaliação e Nivelamento de Graduados</h1>
+          <p class="subtitulo">Classificação geral por pontuação técnica e revisão do Comando</p>
+        </div>
+      </div>
+
+      <div class="filtros-grupo">
+        <mat-form-field appearance="outline" class="campo-processo">
+          <mat-label>Processo (Ano)</mat-label>
+          <mat-select [(ngModel)]="processoSelecionadoId" (selectionChange)="carregarDadosRanking()">
+            @for (proc of processos; track proc.id) {
+              <mat-option [value]="proc.id">{{ proc.ano }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo-busca">
+          <mat-label>Pesquisar Militar (Nome, SARAM ou Seção)</mat-label>
+          <input matInput [(ngModel)]="termoBusca" (keyup)="aplicarFiltro()" placeholder="Ex: Sgt. Almeida" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider class="divisor"></mat-divider>
+
+    @if (carregando) {
+      <div class="loading-box">
+        <mat-spinner diameter="45"></mat-spinner>
+        <p>Carregando classificação...</p>
+      </div>
+    } @else if (listaFiltrada.length === 0) {
+      <div class="vazio-box">
+        <mat-icon>info</mat-icon>
+        <p>Nenhum graduado encontrado para os filtros informados.</p>
+      </div>
+    } @else {
+      <div class="tabela-responsiva">
+        <table mat-table [dataSource]="listaFiltrada" class="tabela-sang">
+
+          <!-- Posição -->
+          <ng-container matColumnDef="posicao">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let item; let i = index" class="col-pos">
+              <span class="badge-pos" [class.top-3]="i < 3 && item.pontuacaoTotal > 0">{{ i + 1 }}º</span>
+            </td>
+          </ng-container>
+
+          <!-- Foto / Avatar -->
+          <ng-container matColumnDef="foto">
+            <th mat-header-cell *matHeaderCellDef>Foto</th>
+            <td mat-cell *matCellDef="let item">
+              <div class="avatar-militar">
+                <mat-icon>person</mat-icon>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Nome e Posto -->
+          <ng-container matColumnDef="militar">
+            <th mat-header-cell *matHeaderCellDef>Militar</th>
+            <td mat-cell *matCellDef="let item">
+              <div class="info-militar">
+                <strong>{{ item.nguerra }}</strong>
+                <small>{{ item.posto }} • SARAM: {{ item.saram }}</small>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Seção -->
+          <ng-container matColumnDef="secao">
+            <th mat-header-cell *matHeaderCellDef>Seção</th>
+            <td mat-cell *matCellDef="let item">{{ item.secao }}</td>
+          </ng-container>
+
+          <!-- Pontuação Total -->
+          <ng-container matColumnDef="pontuacao">
+            <th mat-header-cell *matHeaderCellDef>Pontuação Total</th>
+            <td mat-cell *matCellDef="let item">
+              <span class="nota-destaque">{{ item.pontuacaoTotal }}</span>
+              <span class="nota-max">/ 150</span>
+            </td>
+          </ng-container>
+
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Situação</th>
+            <td mat-cell *matCellDef="let item">
+              @if (item.nivelado) {
+                <span class="status-badge nivelado">Nivelado (Comando)</span>
+              } @else if (item.avaliacaoId) {
+                <span class="status-badge avaliado">Avaliado</span>
+              } @else {
+                <span class="status-badge pendente">Aguardando Avaliação</span>
+              }
+            </td>
+          </ng-container>
+
+          <!-- Ação Dinâmica por Perfil -->
+          <ng-container matColumnDef="acao">
+            <th mat-header-cell *matHeaderCellDef class="col-acao">Ação</th>
+            <td mat-cell *matCellDef="let item" class="col-acao">
+              @if (isAvaliador && !item.avaliacaoId) {
+                <button mat-raised-button class="btn-avaliar" (click)="irParaAvaliacao(item.avaliadoId)">
+                  <mat-icon>rate_review</mat-icon>
+                  Avaliar
+                </button>
+              } @else if (isRevisor && item.avaliacaoId && !item.nivelado) {
+                <button mat-raised-button class="btn-nivelar" (click)="irParaNivelamento(item.avaliacaoId)">
+                  <mat-icon>gavel</mat-icon>
+                  Nivelar
+                </button>
+              } @else {
+                <span class="texto-concluido">
+                  <mat-icon>check_circle</mat-icon>
+                </span>
+              }
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+          <tr mat-row *matRowDef="let row; columns: colunasExibidas;"></tr>
+        </table>
+      </div>
+    }
+  </mat-card>
+</div>
+

@@ -1,0 +1,33 @@
+$kind: http-request
+name: http://localhost:8081/api/users
+description: ""
+url: http://localhost:8081/api/users
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"username\": \"ten.silva.jwt\",\r
+
+    \  \"password\": \"123\",\r
+
+    \  \"saram\": \"7100001\",\r
+
+    \  \"nguerra\": \"Ten. Silva\",\r
+
+    \  \"secao\": \"GDA\",\r
+
+    \  \"codposto\": \"1TEN\",\r
+
+    \  \"posto\": \"Primeiro Tenente\",\r
+
+    \  \"quadro\": \"QOAV\",\r
+
+    \  \"funcao\": \"Piloto de Caça\",\r
+
+    \  \"antiguidade\": 10,\r
+
+    \  \"ativo\": true\r
+
+    }"
+order: 1000

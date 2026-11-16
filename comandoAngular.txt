@@ -1,0 +1,32 @@
+# 1. Core (Guards, Interceptors e Services)
+ng g guard core/guards/auth --functional
+ng g guard core/guards/role --functional
+ng g interceptor core/interceptors/auth --functional
+ng g service core/services/auth
+ng g service core/services/user
+ng g service core/services/avaliado
+ng g service core/services/processo
+ng g service core/services/avaliacao
+ng g service core/services/nivelamento
+ng g service core/services/ranking
+
+# 2. Shared (Componentes globais e Interfaces)
+ng g component shared/components/header
+ng g component shared/components/footer
+ng g interface shared/models/auth
+ng g interface shared/models/user
+ng g interface shared/models/avaliado
+ng g interface shared/models/processo
+ng g interface shared/models/avaliacao
+ng g interface shared/models/nivelamento
+ng g interface shared/models/ranking
+
+# 3. Features (Páginas/Telas)
+ng g component features/login
+ng g component features/ranking
+ng g component features/usuario-cadastro
+ng g component features/avaliado-cadastro
+ng g component features/avaliacao-nivelamento
+
+
+ng add @angular/material

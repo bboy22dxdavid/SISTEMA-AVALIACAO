@@ -1,0 +1,193 @@
+.ranking-container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.ranking-card {
+  padding: 24px;
+  background-color: var(--cor-branco, #ffffff);
+  border-top: 5px solid var(--cor-primaria-escura, #103349);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(16, 51, 73, 0.12) !important;
+}
+
+.topo-ranking {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.titulo-grupo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  .icone-titulo {
+    font-size: 38px;
+    width: 38px;
+    height: 38px;
+    color: var(--cor-primaria-escura, #103349);
+    background-color: rgba(143, 179, 215, 0.25);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .titulo-principal {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--cor-primaria-escura, #103349);
+  }
+
+  .subtitulo {
+    margin: 4px 0 0 0;
+    color: var(--cor-primaria-media, #4b6f85);
+    font-size: 0.9rem;
+  }
+}
+
+.filtros-grupo {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .campo-processo {
+    width: 150px;
+  }
+
+  .campo-busca {
+    width: 280px;
+  }
+}
+
+.divisor {
+  border-top-color: var(--cor-cinza-borda, #abb7be);
+  margin-bottom: 20px;
+}
+
+.tabela-responsiva {
+  overflow-x: auto;
+}
+
+.tabela-sang {
+  width: 100%;
+
+  th {
+    background-color: var(--cor-primaria-escura, #103349);
+    color: var(--cor-branco, #ffffff);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom-color: var(--cor-cinza-borda, #abb7be);
+  }
+}
+
+.badge-pos {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  background-color: #eef2f6;
+  color: var(--cor-primaria-escura, #103349);
+
+  &.top-3 {
+    background-color: var(--cor-secundaria-clara, #8fb3d7);
+    color: var(--cor-primaria-escura, #103349);
+  }
+}
+
+.avatar-militar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(75, 111, 133, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-primaria-media, #4b6f85);
+}
+
+.info-militar {
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    color: var(--cor-primaria-escura, #103349);
+    font-size: 0.98rem;
+  }
+
+  small {
+    color: var(--cor-primaria-media, #4b6f85);
+  }
+}
+
+.nota-destaque {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cor-primaria-escura, #103349);
+}
+
+.nota-max {
+  font-size: 0.85rem;
+  color: var(--cor-primaria-media, #4b6f85);
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  &.nivelado {
+    background-color: rgba(16, 51, 73, 0.12);
+    color: var(--cor-primaria-escura, #103349);
+    border: 1px solid var(--cor-primaria-escura, #103349);
+  }
+
+  &.avaliado {
+    background-color: rgba(143, 179, 215, 0.25);
+    color: var(--cor-primaria-media, #4b6f85);
+  }
+
+  &.pendente {
+    background-color: rgba(255, 80, 0, 0.1);
+    color: var(--cor-destaque-laranja, #ff5000);
+  }
+}
+
+.col-acao {
+  text-align: right;
+}
+
+.btn-avaliar {
+  background-color: var(--cor-primaria-media, #4b6f85) !important;
+  color: var(--cor-branco, #ffffff) !important;
+}
+
+.btn-nivelar {
+  background-color: var(--cor-destaque-laranja, #ff5000) !important;
+  color: var(--cor-branco, #ffffff) !important;
+}
+
+.texto-concluido {
+  color: var(--cor-cinza-borda, #abb7be);
+  display: inline-flex;
+  align-items: center;
+}
+
+.loading-box, .vazio-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  color: var(--cor-primaria-media, #4b6f85);
+  gap: 12px;
+}

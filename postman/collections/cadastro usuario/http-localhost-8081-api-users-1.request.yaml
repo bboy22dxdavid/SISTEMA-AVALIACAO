@@ -1,0 +1,35 @@
+$kind: http-request
+name: http://localhost:8081/api/users
+description: "cadastra graduado com exceção "
+url: http://localhost:8081/api/users?excecaoGraduado=true
+method: POST
+queryParams:
+  excecaoGraduado: "true"
+body:
+  type: json
+  content: "{\r
+
+    \  \"username\": \"sgt.almeida.jwt\",\r
+
+    \  \"password\": \"123\",\r
+
+    \  \"saram\": \"7200002\",\r
+
+    \  \"nguerra\": \"1º Sgt. Almeida\",\r
+
+    \  \"secao\": \"SERIPA\",\r
+
+    \  \"codposto\": \"1SGT\",\r
+
+    \  \"posto\": \"Primeiro Sargento\",\r
+
+    \  \"quadro\": \"BMA\",\r
+
+    \  \"funcao\": \"Chefe de Manutenção\",\r
+
+    \  \"antiguidade\": 14,\r
+
+    \  \"ativo\": true\r
+
+    }"
+order: 2000

@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/avaliacao
+    username: sang
+    password: sang
+
+
+# --- CONEXÃO COM O BANCO DE DADOS (POSTGRESQL) ---
+server:
+  port: 8081
+  error:
+    include-message: always
