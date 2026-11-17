@@ -75,14 +75,14 @@
 }
 
 .btn-novo-ano {
-  background-color: var(--cor-primaria-media, #4b6f85) !important;
-  color: var(--cor-branco, #ffffff) !important;
+  background-color: var(--cor-primaria-media, #4b6f85);
+  color: var(--cor-branco, #ffffff);
   margin-bottom: 1.35em; // Alinha verticalmente com o mat-form-field outline
 }
 
 .btn-salvar-ano {
-  background-color: var(--cor-destaque-laranja, #ff5000) !important;
-  color: var(--cor-branco, #ffffff) !important;
+  background-color: var(--cor-destaque-laranja, #ff5000);
+  color: var(--cor-branco, #ffffff);
   height: 44px;
   margin-bottom: 1.35em;
 }
@@ -221,24 +221,4 @@
   padding: 48px 16px;
   color: var(--cor-primaria-media, #4b6f85);
   gap: 12px;
-}
-.filtros-grupo {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-
-  .campo-processo {
-    width: 190px; // Evita cortar o texto "Processo (Ano)"
-  }
-
-  .campo-busca {
-    width: 310px; // Evita sobrepor o texto com o ícone de lupa
-  }
-}
-
-.paginador-sang {
-  margin-top: 8px;
-  border-top: 1px solid var(--cor-cinza-borda, #abb7be);
-  background-color: var(--cor-branco, #ffffff);
-  color: var(--cor-primaria-escura, #103349);
 }

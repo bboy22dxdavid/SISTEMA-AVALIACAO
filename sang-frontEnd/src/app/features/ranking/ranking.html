@@ -30,8 +30,8 @@
         } @else {
           <div class="novo-processo-box">
             <mat-form-field appearance="outline" class="campo-novo-ano">
-              <mat-label>Novo Ano</mat-label>
-              <input matInput type="number" [(ngModel)]="novoAnoProcesso" placeholder="Ex: 2027" />
+              <mat-label >Novo Ano</mat-label>
+              <input aria-label="Novo Ano" matInput type="number" [(ngModel)]="novoAnoProcesso" placeholder="Ex: 2027" />
             </mat-form-field>
 
             <button mat-raised-button type="button" class="btn-salvar-ano" (click)="criarNovoProcesso()">
@@ -45,7 +45,7 @@
 
         <mat-form-field appearance="outline" class="campo-busca">
           <mat-label>Pesquisar Militar</mat-label>
-          <input matInput [(ngModel)]="termoBusca" (keyup)="aplicarFiltro()" placeholder="Nome, SARAM ou Seção" />
+          <input aria-label="Pesquisar Militar" matInput [(ngModel)]="termoBusca" (keyup)="aplicarFiltro()" placeholder="Nome, SARAM ou Seção" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
@@ -59,14 +59,14 @@
         <mat-spinner diameter="45"></mat-spinner>
         <p>Carregando classificação...</p>
       </div>
-    } @else if (listaFiltrada.length === 0) {
+    } @else if (dataSource.data.length === 0) {
       <div class="vazio-box">
         <mat-icon>info</mat-icon>
         <p>Nenhum graduado encontrado para os filtros informados.</p>
       </div>
     } @else {
       <div class="tabela-responsiva">
-        <table mat-table [dataSource]="listaFiltrada" class="tabela-sang">
+        <table mat-table [dataSource]="dataSource" class="tabela-sang">
 
           <!-- Posição -->
           <ng-container matColumnDef="posicao">
