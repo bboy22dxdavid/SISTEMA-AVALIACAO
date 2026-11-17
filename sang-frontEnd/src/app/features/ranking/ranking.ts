@@ -28,6 +28,10 @@ export class Ranking implements OnInit{
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
+    // Adicione estas propriedades no topo da classe RankingComponent:
+  exibirNovoProcesso = false;
+  novoAnoProcesso: number = new Date().getFullYear();
+
   processos: Processo[] = [];
   processoSelecionadoId: string = '';
 
@@ -50,6 +54,28 @@ export class Ranking implements OnInit{
 
   ngOnInit(): void {
      this.carregarProcessos();
+  }
+
+  // Adicione este método na classe RankingComponent:
+  criarNovoProcesso(): void {
+    if (!this.novoAnoProcesso || this.novoAnoProcesso < 2000) {
+      this.snackBar.open('Informe um ano válido (ex: 2026).', 'Fechar', { duration: 3500 });
+      return;
+    }
+
+    this.carregando = true;
+    this.processoService.criar(this.novoAnoProcesso).subscribe({
+      next: (processoCriado) => {
+        this.exibirNovoProcesso = false;
+        this.snackBar.open(`Processo ${processoCriado.ano} criado com sucesso!`, 'OK', { duration: 3500 });
+        this.carregarProcessos(); // Recarrega a lista e já seleciona o novo ano
+      },
+      error: (err) => {
+        this.carregando = false;
+        const msg = err.error?.mensagem || 'Erro ao criar processo. Verifique se o ano já existe.';
+        this.snackBar.open(msg, 'Fechar', { duration: 4000 });
+      }
+    });
   }
 
    carregarProcessos(): void {

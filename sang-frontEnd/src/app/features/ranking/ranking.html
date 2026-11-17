@@ -9,22 +9,47 @@
         </div>
       </div>
 
-      <div class="filtros-grupo">
-        <mat-form-field appearance="outline" class="campo-processo">
-          <mat-label>Processo (Ano)</mat-label>
-          <mat-select [(ngModel)]="processoSelecionadoId" (selectionChange)="carregarDadosRanking()">
-            @for (proc of processos; track proc.id) {
-              <mat-option [value]="proc.id">{{ proc.ano }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+            <div class="filtros-grupo">
+        @if (!exibirNovoProcesso) {
+          <div class="seletor-processo-box">
+            <mat-form-field appearance="outline" class="campo-processo">
+              <mat-label>Processo (Ano)</mat-label>
+              <mat-select [(ngModel)]="processoSelecionadoId" (selectionChange)="carregarDadosRanking()">
+                @for (proc of processos; track proc.id) {
+                  <mat-option [value]="proc.id">{{ proc.ano }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <button mat-mini-fab type="button" class="btn-novo-ano"
+                    matTooltip="Cadastrar novo ano de processo"
+                    (click)="exibirNovoProcesso = true">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        } @else {
+          <div class="novo-processo-box">
+            <mat-form-field appearance="outline" class="campo-novo-ano">
+              <mat-label>Novo Ano</mat-label>
+              <input matInput type="number" [(ngModel)]="novoAnoProcesso" placeholder="Ex: 2027" />
+            </mat-form-field>
+
+            <button mat-raised-button type="button" class="btn-salvar-ano" (click)="criarNovoProcesso()">
+              Salvar
+            </button>
+            <button mat-icon-button type="button" (click)="exibirNovoProcesso = false" matTooltip="Cancelar">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
 
         <mat-form-field appearance="outline" class="campo-busca">
-          <mat-label >Pesquisar Militar (Nome ou SARAM)</mat-label>
-          <input matInput [(ngModel)]="termoBusca"  (keyup)="aplicarFiltro()" placeholder="Ex: Sgt. Almeida" />
+          <mat-label>Pesquisar Militar</mat-label>
+          <input matInput [(ngModel)]="termoBusca" (keyup)="aplicarFiltro()" placeholder="Nome, SARAM ou Seção" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
+
     </div>
 
     <mat-divider class="divisor"></mat-divider>

@@ -64,6 +64,30 @@
   }
 }
 
+.seletor-processo-box, .novo-processo-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campo-novo-ano {
+  width: 130px;
+}
+
+.btn-novo-ano {
+  background-color: var(--cor-primaria-media, #4b6f85) !important;
+  color: var(--cor-branco, #ffffff) !important;
+  margin-bottom: 1.35em; // Alinha verticalmente com o mat-form-field outline
+}
+
+.btn-salvar-ano {
+  background-color: var(--cor-destaque-laranja, #ff5000) !important;
+  color: var(--cor-branco, #ffffff) !important;
+  height: 44px;
+  margin-bottom: 1.35em;
+}
+
+
 .paginador-sang {
   margin-top: 8px;
   border-top: 1px solid var(--cor-cinza-borda, #abb7be);
