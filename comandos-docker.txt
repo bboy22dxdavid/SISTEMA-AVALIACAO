@@ -44,7 +44,10 @@ docker compose up -d
 # Constrói as imagens do Back-end e Front-end e sobe todos os contêineres
 docker compose up --build -d
 
+<<<<<<< HEAD
 docker compose build --build-arg HTTP_PROXY=http://proxy-brasilia.intraer:8080 --build-arg HTTPS_PROXY=http://proxy-brasilia.intraer:8080
+=======
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
 
 Como sincronizar as duas máquinas: 
 Na máquina que estiver desatualizada, rode -> docker compose down -v //(apaga o volume antigo divergente) 

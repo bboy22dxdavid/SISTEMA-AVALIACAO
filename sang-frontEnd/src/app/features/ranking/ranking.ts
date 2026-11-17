@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+=======
+import { Component, inject, OnInit } from '@angular/core';
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
 import { MaterialModule } from '../../shared/components/material-module/material-module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,16 +15,23 @@ import { Router } from '@angular/router';
 import { Processo } from '../../shared/models/processo';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { RankingResponse } from '../../shared/models/ranking-response';
+<<<<<<< HEAD
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, finalize, of, Subscription } from 'rxjs';
 
 @Component({
   imports: [CommonModule, FormsModule, MaterialModule ],
+=======
+
+@Component({
+  imports: [CommonModule, FormsModule, MaterialModule],
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
   selector: 'app-ranking',
   styleUrl: './ranking.scss',
   templateUrl: './ranking.html',
 })
+<<<<<<< HEAD
 export class Ranking implements OnInit, OnDestroy {
   private readonly processoService = inject(ProcessoService);
   private readonly rankingService = inject(RankingService);
@@ -63,6 +74,25 @@ processoSelecionadoId: string = '';
 
 
 
+=======
+export class Ranking implements OnInit{
+   private processoService = inject(ProcessoService);
+  private rankingService = inject(RankingService);
+  private avaliadoService = inject(AvaliadoService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+
+  processos: Processo[] = [];
+  processoSelecionadoId: string = '';
+
+  listaCompleta: RankingResponse[] = [];
+  listaFiltrada: RankingResponse[] = [];
+  termoBusca: string = '';
+  carregando = false;
+
+   colunasExibidas: string[] = ['posicao', 'foto', 'militar', 'secao', 'pontuacao', 'status', 'acao'];
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
 
 
    get isAvaliador(): boolean {
@@ -75,6 +105,7 @@ processoSelecionadoId: string = '';
 
 
   ngOnInit(): void {
+<<<<<<< HEAD
     this.dataSource.filterPredicate = (data: RankingResponse, filter: string) => {
       const termo = filter.trim().toLowerCase();
       return data.nguerra.toLowerCase().includes(termo) ||
@@ -138,10 +169,37 @@ processoSelecionadoId: string = '';
   }
 
    carregarDadosRanking(): void {
+=======
+     this.carregarProcessos();
+  }
+
+   carregarProcessos(): void {
+    this.carregando = true;
+    this.processoService.listarTodos().subscribe({
+      next: (dados) => {
+        // Ordena do ano mais recente para o mais antigo
+        this.processos = dados.sort((a, b) => b.ano - a.ano);
+        if (this.processos.length > 0) {
+          this.processoSelecionadoId = this.processos[0].id;
+          this.carregarDadosRanking();
+        } else {
+          this.carregando = false;
+        }
+      },
+      error: () => {
+        this.carregando = false;
+        this.snackBar.open('Erro ao carregar processos anuais.', 'Fechar', { duration: 4000 });
+      }
+    });
+  }
+
+  carregarDadosRanking(): void {
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
     if (!this.processoSelecionadoId) return;
 
     this.carregando = true;
     forkJoin({
+<<<<<<< HEAD
       avaliados: this.avaliadoService.listarTodos().pipe(
         catchError(err => {
           console.error('Erro ao buscar avaliados:', err);
@@ -166,6 +224,16 @@ processoSelecionadoId: string = '';
         const idsPontuados = new Set(pontuados.map(p => p.avaliadoId));
 
         const pendentes: RankingResponse[] = ativos
+=======
+      avaliados: this.avaliadoService.listarAtivos(),
+      pontuados: this.rankingService.obterRankingPorProcesso(this.processoSelecionadoId)
+    }).subscribe({
+      next: ({ avaliados, pontuados }) => {
+        // Mescla os avaliados já pontuados com os que ainda aguardam avaliação
+        const idsPontuados = new Set(pontuados.map(p => p.avaliadoId));
+
+        const pendentes: RankingResponse[] = avaliados
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
           .filter(av => av.id && !idsPontuados.has(av.id))
           .map(av => ({
             avaliadoId: av.id!,
@@ -179,6 +247,7 @@ processoSelecionadoId: string = '';
             nivelado: false
           }));
 
+<<<<<<< HEAD
         const listaFinal = [...pontuados, ...pendentes];
 
         this.dataSource = new MatTableDataSource<RankingResponse>(listaFinal);
@@ -251,11 +320,44 @@ processoSelecionadoId: string = '';
 
   irParaAvaliacao(avaliadoId: string): void {
    void this.router.navigate(['/avaliacao', avaliadoId], {
+=======
+        this.listaCompleta = [...pontuados, ...pendentes];
+        this.aplicarFiltro();
+        this.carregando = false;
+      },
+      error: () => {
+        this.carregando = false;
+        this.snackBar.open('Erro ao carregar dados do ranking.', 'Fechar', { duration: 4000 });
+      }
+    });
+  }
+
+  aplicarFiltro(): void {
+    const termo = this.termoBusca.toLowerCase().trim();
+    if (!termo) {
+      this.listaFiltrada = [...this.listaCompleta];
+      return;
+    }
+
+    this.listaFiltrada = this.listaCompleta.filter(item =>
+      item.nguerra.toLowerCase().includes(termo) ||
+      item.saram.toLowerCase().includes(termo) ||
+      item.secao.toLowerCase().includes(termo)
+    );
+  }
+
+  irParaAvaliacao(avaliadoId: string): void {
+    this.router.navigate(['/avaliacao', avaliadoId], {
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
       queryParams: { processoId: this.processoSelecionadoId }
     });
   }
 
   irParaNivelamento(avaliacaoId: string): void {
+<<<<<<< HEAD
     void this.router.navigate(['/nivelamento', avaliacaoId]);
+=======
+    this.router.navigate(['/nivelamento', avaliacaoId]);
+>>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
   }
 }
