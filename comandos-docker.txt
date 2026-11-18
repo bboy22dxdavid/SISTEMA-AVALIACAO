@@ -47,5 +47,8 @@ docker compose up --build -d
 docker compose build --build-arg HTTP_PROXY=http://proxy-brasilia.intraer:8080 --build-arg HTTPS_PROXY=http://proxy-brasilia.intraer:8080
 
 Como sincronizar as duas máquinas: 
-Na máquina que estiver desatualizada, rode -> docker compose down -v //(apaga o volume antigo divergente) 
-e depois  -> docker compose up -d. //Ambas passarão a ter o banco idêntico.
+Na máquina que estiver desatualizada,
+git pull origin main
+docker compose up -d
+
+
