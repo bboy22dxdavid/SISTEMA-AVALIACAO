@@ -6,7 +6,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 
 ## Fase 1: Infraestrutura e Banco de Dados
 
-- [ ] **TASK-01: Criar ambiente containerizado via Docker Compose**
+- [x] **TASK-01: Criar ambiente containerizado via Docker Compose**
   - **Descrição:** Configurar `docker-compose.yml` na raiz do projeto contendo os serviços `postgres` (PostgreSQL 16), `openldap` (servidor LDAP para testes locais de autenticação) e  `phpldapadmin` (opcional, para gerenciamento visual de usuários de teste).
   - **Critério de Aprovação:** Ao executar `docker-compose up -d`, todos os containers sobem com status `healthy`/`running`, sendo possível conectar no PostgreSQL na porta `5433` e realizar consultas/bind no servidor LDAP na porta `389`.
 
