@@ -9,11 +9,7 @@
   background-color: var(--cor-branco, #ffffff);
   border-top: 5px solid var(--cor-primaria-escura, #103349);
   border-radius: 10px;
-<<<<<<< HEAD
   box-shadow: 0 8px 24px rgba(16, 51, 73, 0.12) ;
-=======
-  box-shadow: 0 8px 24px rgba(16, 51, 73, 0.12) !important;
->>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
 }
 
 .topo-ranking {
@@ -60,7 +56,6 @@
   flex-wrap: wrap;
 
   .campo-processo {
-<<<<<<< HEAD
     width: 185px;
   }
 
@@ -68,7 +63,6 @@
     width: 310px;
   }
 }
-
 .seletor-processo-box, .novo-processo-box {
   display: flex;
   align-items: center;
@@ -82,7 +76,7 @@
 .btn-novo-ano {
   background-color: var(--cor-primaria-media, #4b6f85);
   color: var(--cor-branco, #ffffff);
-  margin-bottom: 1.35em; // Alinha verticalmente com o mat-form-field outline
+  margin-bottom: 1.35em;
 }
 
 .btn-salvar-ano {
@@ -92,24 +86,12 @@
   margin-bottom: 1.35em;
 }
 
-
 .paginador-sang {
   margin-top: 8px;
   border-top: 1px solid var(--cor-cinza-borda, #abb7be);
   background-color: var(--cor-branco, #ffffff);
   color: var(--cor-primaria-escura, #103349);
 }
-
-=======
-    width: 150px;
-  }
-
-  .campo-busca {
-    width: 280px;
-  }
-}
-
->>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
 .divisor {
   border-top-color: var(--cor-cinza-borda, #abb7be);
   margin-bottom: 20px;
@@ -213,23 +195,13 @@
 }
 
 .btn-avaliar {
-<<<<<<< HEAD
-  background-color: var(--cor-primaria-media, #4b6f85) ;
-  color: var(--cor-branco, #ffffff) ;
+  background-color: var(--cor-primaria-media, #4b6f85);
+  color: var(--cor-branco, #ffffff);
 }
 
 .btn-nivelar {
-  background-color: var(--cor-destaque-laranja, #ff5000) ;
-  color: var(--cor-branco, #ffffff) ;
-=======
-  background-color: var(--cor-primaria-media, #4b6f85) !important;
-  color: var(--cor-branco, #ffffff) !important;
-}
-
-.btn-nivelar {
-  background-color: var(--cor-destaque-laranja, #ff5000) !important;
-  color: var(--cor-branco, #ffffff) !important;
->>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
+  background-color: var(--cor-destaque-laranja, #ff5000);
+  color: var(--cor-branco, #ffffff);
 }
 
 .texto-concluido {

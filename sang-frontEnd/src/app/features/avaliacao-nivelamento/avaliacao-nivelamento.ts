@@ -17,14 +17,14 @@ import { Avaliado } from '../../shared/models/avaliado';
   templateUrl: './avaliacao-nivelamento.html',
 })
 export class AvaliacaoNivelamento implements OnInit{
-  private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
-  private avaliadoService = inject(AvaliadoService);
-  private avaliacaoService = inject(AvaliacaoService);
-  private nivelamentoService = inject(NivelamentoService);
-  private authService = inject(AuthService);
+  private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly avaliadoService = inject(AvaliadoService);
+  private readonly avaliacaoService = inject(AvaliacaoService);
+  private readonly nivelamentoService = inject(NivelamentoService);
+  private readonly authService = inject(AuthService);
 
   modo: 'AVALIACAO' | 'NIVELAMENTO' = 'AVALIACAO';
   militarAvaliado: Avaliado | null = null;
@@ -53,7 +53,6 @@ export class AvaliacaoNivelamento implements OnInit{
 
 
     form = this.fb.nonNullable.group({
-<<<<<<< HEAD
     qualidadetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
     produtividadetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
     conhecimentoprofissional: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
@@ -69,23 +68,7 @@ export class AvaliacaoNivelamento implements OnInit{
     adaptabilidade: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
     comunicacaooralescrita: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
     relacionamentoambientetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-=======
-    qualidadetrabalho: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    produtividadetrabalho: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    conhecimentoprofissional: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    eficienciatrabalho: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    meiosmateriais: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    planejamento: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    julgamento: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    responsabilidade: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    disciplina: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    apresentacaopessoal: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    lideranca: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    iniciativa: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    adaptabilidade: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    comunicacaooralescrita: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
-    relacionamentoambientetrabalho: [8, [Validators.required, Validators.min(0), Validators.max(10)]],
->>>>>>> 4bb604f4dd8ae54da2598aff25def9bf1c353a1b
+
     justificativa: [''],
     conceitomoral: ['', [Validators.required]],
     conceitoprofissional: ['', [Validators.required]]
