@@ -30,3 +30,4 @@ pgdata_volume/
 *.njsproj
 *.sln
 *.sw?
+.env

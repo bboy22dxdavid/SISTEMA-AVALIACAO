@@ -1,77 +1,78 @@
-name: sang-sistema
+name: sistema-avaliacao
 
 services:
-  # --- BANCO DE DADOS (PostgreSQL) ---
-  avaliacaodb:
+  postgres:
     image: postgres:16-alpine
-    container_name: sang-postgres
-    ports:
-      - "5433:5432"
+    container_name: avaliacao-sang
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: sang
-      POSTGRES_PASSWORD: sang
-      POSTGRES_DB: avaliacao
-    networks:
-      - sang-network 
+      POSTGRES_DB: ${POSTGRES_DB:-sang_db}
+      POSTGRES_USER: ${POSTGRES_USER:-sang}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sang}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./database/init:/docker-entrypoint-initdb.d # 👈 Garante o mesmo banco nas 2 máquinas
+      - sang_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sang -d avaliacao"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sang} -d ${POSTGRES_DB:-sang_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - sang-network
 
-  # --- GERENCIADOR DO BANCO (pgAdmin) ---
   pgadmin:
     image: dpage/pgadmin4
     container_name: sang-pgadmin
-    ports:
-      - "15432:80"
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "15432:80"
     depends_on:
-      - avaliacaodb
+      - postgres
     networks:
       - sang-network
+    
 
-  # --- BACK-END (Spring Boot - Java 21) ---
-  backend:
-    build: 
-      context: ./sang-backEnd
-      dockerfile: Dockerfile
-    container_name: sang-backend
-    ports:
-      - "8081:8081"
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: sang-openldap
+    restart: unless-stopped
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://avaliacaodb:5432/avaliacao
-      SPRING_DATASOURCE_USERNAME: sang
-      SPRING_DATASOURCE_PASSWORD: sang
-    depends_on:
-      - avaliacaodb
-    networks:
-      - sang-network
-
-  # --- FRONT-END (Angular) ---
-  frontend:
-    build: 
-      context: ./sang-frontEnd
-      dockerfile: Dockerfile
-    container_name: sang-frontend
+      LDAP_ORGANISATION: "Forca Aerea Brasileira - SANG"
+      LDAP_DOMAIN: "fab.mil.br"
+      LDAP_ADMIN_PASSWORD: "${LDAP_ADMIN_PASSWORD:-admin}"
+      LDAP_TLS: "false"
     ports:
-      - "4200:80"
-    depends_on:
-      - backend
+      - "389:389"
+      - "636:636"
+    volumes:
+      - sang_ldap_data:/var/lib/ldap
+      - sang_ldap_config:/etc/ldap/slapd.d
     networks:
       - sang-network
 
-# --- REDE UNIFICADA ---
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: sang-phpldapadmin
+    restart: unless-stopped
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8088:80"
+    depends_on:
+      - openldap
+    networks:
+      - sang-network
+
 networks:
   sang-network:
     driver: bridge
 
-# --- VOLUMES PARA PERSISTÊNCIA ---
 volumes:
-  pgdata: 
-    driver: local
+  sang_pgdata:
+  sang_ldap_data:
+  sang_ldap_config:

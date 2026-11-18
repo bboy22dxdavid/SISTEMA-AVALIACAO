@@ -7,8 +7,8 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 ## Fase 1: Infraestrutura e Banco de Dados
 
 - [ ] **TASK-01: Criar ambiente containerizado via Docker Compose**
-  - **Descrição:** Configurar `docker-compose.yml` na raiz do projeto contendo os serviços `postgres` (PostgreSQL 16), `openldap` (servidor LDAP para testes locais de autenticação) e `phpldapadmin` (opcional, para gerenciamento visual de usuários de teste).
-  - **Critério de Aprovação:** Ao executar `docker-compose up -d`, todos os containers sobem com status `healthy`/`running`, sendo possível conectar no PostgreSQL na porta `5432` e realizar consultas/bind no servidor LDAP na porta `389`.
+  - **Descrição:** Configurar `docker-compose.yml` na raiz do projeto contendo os serviços `postgres` (PostgreSQL 16), `openldap` (servidor LDAP para testes locais de autenticação) e  `phpldapadmin` (opcional, para gerenciamento visual de usuários de teste).
+  - **Critério de Aprovação:** Ao executar `docker-compose up -d`, todos os containers sobem com status `healthy`/`running`, sendo possível conectar no PostgreSQL na porta `5433` e realizar consultas/bind no servidor LDAP na porta `389`.
 
 - [ ] **TASK-02: Criar estrutura inicial do projeto Backend (Spring Boot + Maven)**
   - **Descrição:** Inicializar o projeto em `/backend` com Java 21, Spring Boot 3.x e dependências no `pom.xml` (Spring Web, Spring Data JPA, Spring Security, Spring LDAP, Flyway, PostgreSQL Driver, Validation e JWT).
