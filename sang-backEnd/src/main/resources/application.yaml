@@ -25,7 +25,7 @@ spring:
     urls: ${SPRING_LDAP_URLS:ldap://localhost:389}
     base: ${SPRING_LDAP_BASE:dc=fab,dc=mil,dc=br}
     username: ${SPRING_LDAP_USERNAME:cn=admin,dc=fab,dc=mil,dc=br}
-    password: ${SPRING_LDAP_PASSWORD:admin123}
+    password: ${SPRING_LDAP_PASSWORD:admin}
 
 server:
   port: 8081

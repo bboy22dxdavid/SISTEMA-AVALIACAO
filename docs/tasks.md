@@ -14,11 +14,11 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
   - **Descrição:** Inicializar o projeto em `/backend` com Java 21, Spring Boot 3.x e dependências no `pom.xml` (Spring Web, Spring Data JPA, Spring Security, Spring LDAP, Flyway, PostgreSQL Driver, Validation e JWT).
   - **Critério de Aprovação:** O comando `mvn clean compile` executa sem erros e a aplicação inicializa conectando-se ao container do PostgreSQL.
 
-- [ ] **TASK-03: Implementar Migrations do Banco de Dados e Trava de Imutabilidade (Flyway)**
+- [X] **TASK-03: Implementar Migrations do Banco de Dados e Trava de Imutabilidade (Flyway)**
   - **Descrição:** Criar `V1__init_schema.sql` com as tabelas (`roles`, `users`, `efetivo`, `processos`, `designacoes_setor`, `avaliacoes`, `nivelamentos`), chaves estrangeiras, constraints de unicidade e uma *Trigger* no PostgreSQL impedindo comandos `DELETE` na tabela `avaliacoes`.
   - **Critério de Aprovação:** Ao subir o backend, o Flyway aplica a migration com sucesso; uma tentativa direta de executar `DELETE FROM avaliacoes` no banco retorna erro bloqueando a exclusão.
 
-- [ ] **TASK-04: Criar carga inicial de dados fictícios (Seed SQL & LDIF)**
+- [X] **TASK-04: Criar carga inicial de dados fictícios (Seed SQL & LDIF)**
   - **Descrição:** Criar `V2__seed_dados_teste.sql` populando os papéis (`ROLE_COORDINATOR`, `ROLE_EVALUATOR`, `ROLE_REVIEWER`), um processo inicial, militares variados (de Cabo a Coronel, com diferentes antiguidades e vínculos `CARREIRA` e `TEMPORARIO`) e cadastrar os usuários correspondentes no container OpenLDAP.
   - **Critério de Aprovação:** As tabelas possuem registros de teste consistentes e os usuários existem no diretório LDAP pronto para login.
 
@@ -92,3 +92,8 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 
 - [ ] **TASK-18: Integrar Backend e Frontend no Docker Compose Final**
   - **Descrição:** Criar os `Dockerfile` multi-stage para `/backend` (Maven build + JRE) e `/frontend` (Angular build + Nginx com proxy reverso para `/api`) e adicioná-los ao `docker-compose.yml` principal.
+
+
+Get-Content .\database\ldap\bootstrap.ldif | docker exec -i sang-openldap ldapadd -c -x -D "cn=admin,dc=fab,dc=mil,dc=br" -w admin123
+docker exec -i sang-openldap ldapadd -c -x -D "cn=admin,dc=fab,dc=mil,dc=br" -w admin < database/ldap/bootstrap.ldif
+

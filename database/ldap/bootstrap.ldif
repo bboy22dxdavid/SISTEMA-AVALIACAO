@@ -1,0 +1,51 @@
+dn: ou=users,dc=fab,dc=mil,dc=br
+objectClass: organizationalUnit
+ou: users
+
+dn: uid=maj.rocha,ou=users,dc=fab,dc=mil,dc=br
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Major Rocha
+sn: Rocha
+uid: maj.rocha
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/maj.rocha
+userPassword: 123
+
+dn: uid=cap.mendes,ou=users,dc=fab,dc=mil,dc=br
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Capitao Mendes
+sn: Mendes
+uid: cap.mendes
+uidNumber: 10002
+gidNumber: 10001
+homeDirectory: /home/cap.mendes
+userPassword: 123
+
+dn: uid=1ten.silva,ou=users,dc=fab,dc=mil,dc=br
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Primeiro Tenente Silva
+sn: Silva
+uid: 1ten.silva
+uidNumber: 10003
+gidNumber: 10001
+homeDirectory: /home/1ten.silva
+userPassword: 123
+
+dn: uid=cel.antunes,ou=users,dc=fab,dc=mil,dc=br
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Coronel Antunes
+sn: Antunes
+uid: cel.antunes
+uidNumber: 10004
+gidNumber: 10001
+homeDirectory: /home/cel.antunes
+userPassword: 123
