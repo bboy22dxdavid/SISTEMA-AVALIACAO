@@ -1,13 +1,10 @@
--- Extensão para geração de UUID
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 1. Tabela de Perfis de Acesso (Roles)
 CREATE TABLE roles (
                        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                        name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- 2. Tabela de Usuários (Autenticados via LDAP)
 CREATE TABLE users (
                        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                        username VARCHAR(100) NOT NULL UNIQUE,
@@ -20,7 +17,6 @@ CREATE TABLE users (
                        CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
--- 3. Tabela de Efetivo (Militares elegíveis e temporários)
 CREATE TABLE efetivo (
                          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                          saram VARCHAR(20) NOT NULL UNIQUE,
@@ -36,7 +32,6 @@ CREATE TABLE efetivo (
                          ativo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
--- 4. Tabela de Processos Anuais
 CREATE TABLE processos (
                            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                            ano INTEGER NOT NULL UNIQUE,
@@ -44,7 +39,6 @@ CREATE TABLE processos (
                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. Tabela de Designações por Setor
 CREATE TABLE designacoes_setor (
                                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                                    processo_id UUID NOT NULL,
@@ -55,7 +49,6 @@ CREATE TABLE designacoes_setor (
                                    CONSTRAINT uq_processo_secao UNIQUE (processo_id, secao)
 );
 
--- 6. Tabela de Avaliações (Critérios em JSONB + Escala 1 a 5)
 CREATE TABLE avaliacoes (
                             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                             processo_id UUID NOT NULL,
@@ -73,7 +66,6 @@ CREATE TABLE avaliacoes (
                             CONSTRAINT uq_avaliacao_processo_militar UNIQUE (processo_id, avaliado_id)
 );
 
--- 7. Tabela de Nivelamentos / Revisão do Coronel (1:1 com Avaliação)
 CREATE TABLE nivelamentos (
                               id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                               avaliacao_id UUID NOT NULL UNIQUE,
@@ -88,7 +80,6 @@ CREATE TABLE nivelamentos (
                               CONSTRAINT fk_nivelamento_revisor FOREIGN KEY (revisor_id) REFERENCES users(id)
 );
 
--- 8. Trava de Imutabilidade no Banco (Bloqueia DELETE na tabela avaliacoes)
 CREATE OR REPLACE FUNCTION impedir_exclusao_avaliacao()
 RETURNS TRIGGER AS $$
 BEGIN

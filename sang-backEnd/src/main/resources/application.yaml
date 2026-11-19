@@ -1,35 +1,37 @@
 spring:
   application:
     name: sang-backend
+
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5433/sang_db
     username: sang
     password: sang
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: validate # O Flyway passa a gerenciar o schema (TASK-03)
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         format_sql: true
 
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db/migration
-    baseline-on-migrate: true
+    baseline-on-migrate: false
 
   ldap:
     urls: ${SPRING_LDAP_URLS:ldap://localhost:389}
     base: ${SPRING_LDAP_BASE:dc=fab,dc=mil,dc=br}
     username: ${SPRING_LDAP_USERNAME:cn=admin,dc=fab,dc=mil,dc=br}
-    password: ${SPRING_LDAP_PASSWORD:admin}
+    password: ${SPRING_LDAP_PASSWORD:admin123}
 
-# --- CONEXÃO COM O BANCO DE DADOS (POSTGRESQL) ---
 server:
   port: 8081
   error:
     include-message: always
+
 jwt:
   secret: ${JWT_SECRET:ChaveSecretaSuperSeguraParaOSistemaSANG2026ComMaisDe256Bits}
-  expiration: 28800000 # 8 horas
+  expiration: 28800000
