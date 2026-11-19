@@ -26,7 +26,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 
 ## Fase 2: Segurança, Autenticação LDAP e Integração de Efetivo
 
-- [ ] **TASK-05: Implementar Autenticação via LDAP e Emissão de Token JWT**
+- [X] **TASK-05: Implementar Autenticação via LDAP e Emissão de Token JWT**
   - **Descrição:** Configurar `LdapAuthConfig`, `SecurityConfig` e o endpoint `POST /api/auth/login` para autenticar `username` e `password` no LDAP, buscar o perfil/posto do militar na tabela `users` e devolver um token JWT contendo roles e dados funcionais.
   - **Critério de Aprovação:** Requisição `POST /api/auth/login` com credenciais LDAP válidas retorna HTTP `200` com JWT válido; credenciais inválidas ou usuário sem perfil cadastrado retornam HTTP `401`/`403`.
 
