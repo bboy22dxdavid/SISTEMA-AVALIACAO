@@ -30,7 +30,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
   - **Descrição:** Configurar `LdapAuthConfig`, `SecurityConfig` e o endpoint `POST /api/auth/login` para autenticar `username` e `password` no LDAP, buscar o perfil/posto do militar na tabela `users` e devolver um token JWT contendo roles e dados funcionais.
   - **Critério de Aprovação:** Requisição `POST /api/auth/login` com credenciais LDAP válidas retorna HTTP `200` com JWT válido; credenciais inválidas ou usuário sem perfil cadastrado retornam HTTP `401`/`403`.
 
-- [ ] **TASK-06: Implementar Camada de Integração de Efetivo (Port & Mock Adapter)**
+- [X] **TASK-06: Implementar Camada de Integração de Efetivo (Port & Mock Adapter)**
   - **Descrição:** Criar a interface `EfetivoProviderPort` e a implementação `DatabaseMockEfetivoAdapter` lendo da tabela `efetivo`, aplicando obrigatoriamente o filtro de elegibilidade (`tipo_vinculo = 'CARREIRA'` e `ativo = true`) e expondo `GET /api/efetivo`.
   - **Critério de Aprovação:** O endpoint `GET /api/efetivo` retorna paginadamente apenas militares ativos e de carreira; nenhum militar cadastrado como `TEMPORARIO` aparece no retorno da API.
 

@@ -1,4 +1,4 @@
-package io.github.bboy22dxdavid.sang_backEnd.adapter;
+package io.github.bboy22dxdavid.sang_backEnd.repository;
 
 import io.github.bboy22dxdavid.sang_backEnd.model.Efetivo;
 
