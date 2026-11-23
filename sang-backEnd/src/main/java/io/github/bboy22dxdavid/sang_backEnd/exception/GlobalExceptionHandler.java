@@ -1,5 +1,6 @@
 package io.github.bboy22dxdavid.sang_backEnd.exception;
 
+
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

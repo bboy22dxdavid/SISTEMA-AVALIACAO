@@ -50,7 +50,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
   - **Descrição:** Criar `POST /api/avaliacao` e `GET /api/avaliacao` (`ROLE_EVALUATOR`), validando: (a) notas inteiras de `1` a `5` nos 15 critérios, (b) soma automática do total (15 a 75), (c) campos qualitativos preenchidos e (d) `HierarquiaValidator` impedindo avaliar militar de posto superior ou mais antigo. Não implementar endpoint `DELETE`.
   - **Critério de Aprovação:** A avaliação de um subordinado mais moderno é salva com a soma exata dos 15 critérios; tentar avaliar um militar mais antigo ou de outro setor retorna HTTP `422 Unprocessable Entity`.
 
-- [ ] **TASK-10: Implementar Nivelamento e Revisão do Coronel**
+- [X] **TASK-10: Implementar Nivelamento e Revisão do Coronel**
   - **Descrição:** Criar `POST /api/nivelamento` e `GET /api/nivelamento` (`ROLE_REVIEWER`) vinculados a uma avaliação existente. Comparar os 15 critérios originais com os revisados e exigir `justificativa_revisao` não vazia sempre que qualquer nota divergir da original.
   - **Critério de Aprovação:** O Revisor consegue aprovar notas iguais sem justificativa de alteração, mas recebe erro de validação se alterar qualquer nota de critério e deixar a justificativa em branco.
 
