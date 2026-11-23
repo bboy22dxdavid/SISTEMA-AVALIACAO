@@ -54,7 +54,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
   - **Descrição:** Criar `POST /api/nivelamento` e `GET /api/nivelamento` (`ROLE_REVIEWER`) vinculados a uma avaliação existente. Comparar os 15 critérios originais com os revisados e exigir `justificativa_revisao` não vazia sempre que qualquer nota divergir da original.
   - **Critério de Aprovação:** O Revisor consegue aprovar notas iguais sem justificativa de alteração, mas recebe erro de validação se alterar qualquer nota de critério e deixar a justificativa em branco.
 
-- [ ] **TASK-11: Implementar Consolidação e Ordenação do Ranking**
+- [X] **TASK-11: Implementar Consolidação e Ordenação do Ranking**
   - **Descrição:** Criar `GET /api/ranking/{processoId}` retornando os militares avaliados ordenados pela pontuação final (`nota_total_revisada` quando nivelado, ou `nota_total` quando pendente de revisão) em ordem decrescente, usando a **antiguidade** como critério de desempate.
   - **Critério de Aprovação:** Em um cenário de teste com dois militares empatados com 65 pontos, o militar de menor número/maior antiguidade aparece rigorosamente na posição superior da lista JSON.
 
