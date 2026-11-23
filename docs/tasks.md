@@ -38,11 +38,11 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 
 ## Fase 3: Regras de Negócio e Endpoints REST (Backend)
 
-- [ ] **TASK-07: Implementar Gestão de Processos Anuais (Coordenador)**
+- [X] **TASK-07: Implementar Gestão de Processos Anuais (Coordenador)**
   - **Descrição:** Criar `ProcessoController` e `ProcessoService` (`GET /api/processos` e `POST /api/processos`) restritos a `ROLE_COORDINATOR` para abertura e listagem de ciclos por `ano`.
   - **Critério de Aprovação:** Um Coordenador cria um novo processo (ex: `2026`) e recebe HTTP `201`; tentar duplicar o mesmo ano retorna erro `409 Conflict` e usuários sem papel de Coordenador recebem `403 Forbidden`.
 
-- [ ] **TASK-08: Implementar Gestão de Perfis e Designação por Setor (Coordenador)**
+- [X] **TASK-08: Implementar Gestão de Perfis e Designação por Setor (Coordenador)**
   - **Descrição:** Criar endpoints em `UserController` e `DesignacaoController` para atribuir papéis aos usuários (validando se `ROLE_REVIEWER` possui posto de Coronel) e vincular qual `Avaliador` responde por cada `secao` no processo ativo.
   - **Critério de Aprovação:** O sistema bloqueia com erro de negócio a atribuição de `ROLE_REVIEWER` a um militar que não seja Coronel (`CEL`) e salva corretamente o vínculo único `(processo_id, secao)`.
 
