@@ -46,7 +46,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
   - **Descrição:** Criar endpoints em `UserController` e `DesignacaoController` para atribuir papéis aos usuários (validando se `ROLE_REVIEWER` possui posto de Coronel) e vincular qual `Avaliador` responde por cada `secao` no processo ativo.
   - **Critério de Aprovação:** O sistema bloqueia com erro de negócio a atribuição de `ROLE_REVIEWER` a um militar que não seja Coronel (`CEL`) e salva corretamente o vínculo único `(processo_id, secao)`.
 
-- [ ] **TASK-09: Implementar Avaliação Inicial com Trava de Precedência Hierárquica**
+- [X] **TASK-09: Implementar Avaliação Inicial com Trava de Precedência Hierárquica**
   - **Descrição:** Criar `POST /api/avaliacao` e `GET /api/avaliacao` (`ROLE_EVALUATOR`), validando: (a) notas inteiras de `1` a `5` nos 15 critérios, (b) soma automática do total (15 a 75), (c) campos qualitativos preenchidos e (d) `HierarquiaValidator` impedindo avaliar militar de posto superior ou mais antigo. Não implementar endpoint `DELETE`.
   - **Critério de Aprovação:** A avaliação de um subordinado mais moderno é salva com a soma exata dos 15 critérios; tentar avaliar um militar mais antigo ou de outro setor retorna HTTP `422 Unprocessable Entity`.
 

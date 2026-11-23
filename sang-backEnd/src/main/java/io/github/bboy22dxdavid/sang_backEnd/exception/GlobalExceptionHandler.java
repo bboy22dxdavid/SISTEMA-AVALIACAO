@@ -3,6 +3,7 @@ package io.github.bboy22dxdavid.sang_backEnd.exception;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,25 +15,26 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // 1. Regras de Negócio (ex: Trava de Coronel, Militar Temporário, Precedência Hierárquica)
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
-    // 2. Registros não encontrados no banco (404)
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleEntityNotFound(EntityNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    // 3. Bloqueio de Perfil / Permissão do @PreAuthorize (403 Forbidden)
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
         return buildResponse(HttpStatus.FORBIDDEN, "Acesso negado: você não possui permissão para executar esta operação.");
     }
 
-    // 4. Erros de validação dos DTOs (@NotBlank, @NotNull, etc.)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Map<String, Object>> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        return buildResponse(HttpStatus.METHOD_NOT_ALLOWED, "Operação não permitida: registros de avaliação são imutáveis.");
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         String mensagem = ex.getBindingResult().getFieldErrors().stream()
@@ -40,6 +42,11 @@ public class GlobalExceptionHandler {
                 .findFirst()
                 .orElse("Dados inválidos na requisição.");
         return buildResponse(HttpStatus.BAD_REQUEST, mensagem);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno: " + ex.getMessage());
     }
 
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String mensagem) {
