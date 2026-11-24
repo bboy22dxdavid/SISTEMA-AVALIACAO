@@ -20,7 +20,7 @@
 
       <div class="placar-box">
         <span>Pontuação Total</span>
-        <strong>{{ pontuacaoCalculada }} <small>/ 150</small></strong>
+        <strong>{{ pontuacaoCalculada }} <small>/ 75</small></strong>
       </div>
     </div>
 
@@ -46,8 +46,8 @@
               </div>
 
               <mat-form-field appearance="outline" class="input-nota">
-                <mat-label>Nota (0-10)</mat-label>
-                <input matInput type="number" min="0" max="10" [formControlName]="crit.campo" />
+                <mat-label>Nota (1-5)</mat-label>
+                <input matInput id=" " type="number" min="1" max="5" [formControlName]="crit.campo" />
               </mat-form-field>
             </div>
           }
@@ -59,19 +59,19 @@
         <div class="pareceres-grid">
           <mat-form-field appearance="outline">
             <mat-label>Conceito Moral</mat-label>
-            <input matInput formControlName="conceitomoral" placeholder="Ex: Exemplar, Idôneo..." />
+            <input matInput id="" formControlName="conceitomoral" placeholder="Ex: Exemplar, Idôneo..." />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Conceito Profissional</mat-label>
-            <input matInput formControlName="conceitoprofissional" placeholder="Ex: Altamente capacitado..." />
+            <input matInput id="" formControlName="conceitoprofissional" placeholder="Ex: Altamente capacitado..." />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="span-2">
             <mat-label>
               {{ modo === 'NIVELAMENTO' ? 'Justificativa da Revisão do Comando (Obrigatória)' : 'Justificativa / Parecer Complementar (Opcional)' }}
             </mat-label>
-            <textarea matInput rows="3" formControlName="justificativa" placeholder="Descreva os fatos observados..."></textarea>
+            <textarea matInput id="" rows="3" formControlName="justificativa" placeholder="Descreva os fatos observados..."></textarea>
           </mat-form-field>
         </div>
 

@@ -18,7 +18,7 @@
 
       <div class="placar-box">
         <span>Nota Original: {{ pontuacaoOriginal }} pts</span>
-        <strong>{{ pontuacaoRevisada }} <small>/ 150</small></strong>
+        <strong>{{ pontuacaoRevisada }} <small>/ 75</small></strong>
       </div>
     </div>
 
@@ -50,7 +50,7 @@
 
                 <mat-form-field appearance="outline" class="input-nota">
                   <mat-label>Revisada</mat-label>
-                  <input matInput type="number" min="0" max="10" [formControlName]="crit.campo" />
+                  <input matInput id="" type="number" min="1" max="5" [formControlName]="crit.campo" />
                 </mat-form-field>
               </div>
             </div>
@@ -63,17 +63,17 @@
         <div class="pareceres-grid">
           <mat-form-field appearance="outline">
             <mat-label>Conceito Moral (Revisado)</mat-label>
-            <input matInput formControlName="conceitomoral" />
+            <input matInput id="" formControlName="conceitomoral" />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Conceito Profissional (Revisado)</mat-label>
-            <input matInput formControlName="conceitoprofissional" />
+            <input matInput id="" formControlName="conceitoprofissional" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="span-2">
             <mat-label>Justificativa da Revisão do Comando (Obrigatória)</mat-label>
-            <textarea matInput rows="3" formControlName="justificativa"
+            <textarea matInput id="" rows="3" formControlName="justificativa"
                       placeholder="Descreva o motivo das alterações ou homologação das notas..."></textarea>
           </mat-form-field>
         </div>

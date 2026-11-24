@@ -53,21 +53,21 @@ export class AvaliacaoNivelamento implements OnInit{
 
 
     form = this.fb.nonNullable.group({
-    qualidadetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    produtividadetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    conhecimentoprofissional: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    eficienciatrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    meiosmateriais: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    planejamento: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    julgamento: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    responsabilidade: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    disciplina: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    apresentacaopessoal: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    lideranca: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    iniciativa: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    adaptabilidade: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    comunicacaooralescrita: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-    relacionamentoambientetrabalho: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
+    qualidadetrabalho: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    produtividadetrabalho: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    conhecimentoprofissional: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    eficienciatrabalho: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    meiosmateriais: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    planejamento: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    julgamento: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    responsabilidade: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    disciplina: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    apresentacaopessoal: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    lideranca: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    iniciativa: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    adaptabilidade: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    comunicacaooralescrita: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+    relacionamentoambientetrabalho: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
 
     justificativa: [''],
     conceitomoral: ['', [Validators.required]],
@@ -189,7 +189,7 @@ export class AvaliacaoNivelamento implements OnInit{
   private finalizar(msg: string): void {
     this.carregando = false;
     this.snackBar.open(msg, 'OK', { duration: 4000 });
-    this.router.navigate(['/ranking']);
+    void this.router.navigate(['/ranking']);
   }
 
   private tratarErro(err: any): void {

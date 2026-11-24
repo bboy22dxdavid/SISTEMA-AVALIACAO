@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Service } from '@angular/core';
+import { inject, Injectable} from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Avaliado } from '../../shared/models/avaliado';
 
@@ -7,7 +7,7 @@ import { Avaliado } from '../../shared/models/avaliado';
   providedIn: 'root'
 })
 export class AvaliadoService  {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:8081/api/avaliados';
 
    salvar(avaliado: Avaliado): Observable<Avaliado> {
