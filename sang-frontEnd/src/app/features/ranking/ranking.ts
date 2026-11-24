@@ -51,11 +51,11 @@ export class Ranking implements OnInit, OnDestroy {
   colunasExibidas = ['posicao', 'foto', 'militar', 'secao', 'pontuacao', 'status', 'acao'];
 
   get isAvaliador(): boolean {
-    return this.authService.getUserRole() === 'ROLE_AVALIADOR';
+    return this.authService.getUserRole() === 'ROLE_EVALUATOR';
   }
 
   get isRevisor(): boolean {
-    return this.authService.getUserRole() === 'ROLE_REVISOR';
+    return this.authService.getUserRole() === 'ROLE_REVIEWER';
   }
 
   ngOnInit(): void {

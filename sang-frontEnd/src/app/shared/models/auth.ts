@@ -1,3 +1,7 @@
+
+
+export type UserRole = 'ROLE_COORDINATOR' | 'ROLE_EVALUATOR' | 'ROLE_REVIEWER';
+
 export interface LoginRequest {
   username: string;
   password: string;
@@ -5,8 +9,11 @@ export interface LoginRequest {
 
 // Interface para a resposta do login
 export interface LoginResponse {
-  token: string;
-  userId: string; // UUID retornado pelo Spring Boot
+   token: string;
+  userId: string;
   username: string;
-  role: string;   // Ex: 'ROLE_AVALIADOR', 'ROLE_REVISOR', 'ROLE_ADMIN'
+  saram: string;
+  posto: string;
+  antiguidade: number;
+  role: UserRole;  // Ex: 'ROLE_AVALIADOR', 'ROLE_REVISOR', 'ROLE_ADMIN'
 }

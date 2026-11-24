@@ -151,7 +151,7 @@ export class AvaliacaoNivelamento implements OnInit{
   salvar(): void {
     if (this.form.invalid) return;
 
-    const usuarioLogadoId = this.authService.getAuthData()?.userId;
+    const usuarioLogadoId = this.authService.getCurrentUser()?.userId;
     if (!usuarioLogadoId) {
       this.snackBar.open('Sessão expirada. Faça login novamente.', 'Fechar', { duration: 4000 });
       return;

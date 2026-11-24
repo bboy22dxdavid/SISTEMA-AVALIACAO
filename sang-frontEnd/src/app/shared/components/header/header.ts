@@ -16,9 +16,9 @@ export class Header {
    get labelPerfil(): string {
     const role = this.authService.getUserRole();
     switch (role) {
-      case 'ROLE_AVALIADOR': return 'Avaliador';
-      case 'ROLE_REVISOR': return 'Revisor (Comando)';
-      case 'ROLE_ADMIN': return 'Administrador';
+      case 'ROLE_EVALUATOR': return 'Avaliador';
+      case 'ROLE_REVIEWER': return 'Revisor (Comando)';
+      case 'ROLE_COORDINATOR': return 'Administrador';
       default: return 'Usuário';
     }
   }
