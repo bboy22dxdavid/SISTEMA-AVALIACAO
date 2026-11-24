@@ -14,18 +14,20 @@
           <div class="seletor-processo-box">
             <mat-form-field appearance="outline" class="campo-processo">
               <mat-label>Processo (Ano)</mat-label>
-              <mat-select [(ngModel)]="processoSelecionadoId" (selectionChange)="carregarDadosRanking()">
+              <mat-select [(ngModel)]="processoSelecionadoId" (selectionChange)="carregarDadosRanking()" aria-label="Selecionar Processo por Ano">
                 @for (proc of processos; track proc.id) {
                   <mat-option [value]="proc.id">{{ proc.ano }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
 
-            <button mat-mini-fab type="button" class="btn-novo-ano"
-                    matTooltip="Cadastrar novo ano de processo"
-                    (click)="exibirNovoProcesso = true">
-              <mat-icon>add</mat-icon>
-            </button>
+            @if (isCoordinator) {
+              <button mat-mini-fab type="button" class="btn-novo-ano"
+                      matTooltip="Cadastrar novo ano de processo"
+                      (click)="exibirNovoProcesso = true">
+                <mat-icon>add</mat-icon>
+              </button>
+            }
           </div>
         } @else {
           <div class="novo-processo-box">
@@ -71,8 +73,8 @@
           <!-- Posição -->
           <ng-container matColumnDef="posicao">
             <th mat-header-cell *matHeaderCellDef>#</th>
-            <td mat-cell *matCellDef="let item; let i = index" class="col-pos">
-              <span class="badge-pos" [class.top-3]="i < 3 && item.pontuacaoTotal > 0">{{ calcularPosicaoReal(i) }}º</span>
+            <td mat-cell *matCellDef="let item" class="col-pos">
+              <span class="badge-pos" [class.top-3]="item.posicao <= 3 && item.avaliado">{{ item.posicao }}º</span>
             </td>
           </ng-container>
 
@@ -91,8 +93,15 @@
             <th mat-header-cell *matHeaderCellDef>Militar</th>
             <td mat-cell *matCellDef="let item">
               <div class="info-militar">
-                <strong>{{ item.nguerra }}</strong>
-                <small>{{ item.posto }} • SARAM: {{ item.saram }}</small>
+                <strong>{{ item.nomeGuerra }}</strong>
+                 <small>
+                  {{ item.posto }}
+                  @if (isMobile) {
+                    • {{ item.secao }}
+                  } @else {
+                    • SARAM: {{ item.saram }}
+                  }
+                </small>
               </div>
             </td>
           </ng-container>
@@ -105,10 +114,13 @@
 
           <!-- Pontuação Total -->
           <ng-container matColumnDef="pontuacao">
-            <th mat-header-cell *matHeaderCellDef>Pontuação Total</th>
-            <td mat-cell *matCellDef="let item">
-              <span class="nota-destaque">{{ item.pontuacaoTotal }}</span>
-              <span class="nota-max">/ 150</span>
+            <th mat-header-cell *matHeaderCellDef>{{ isMobile ? 'Pts' : 'Pontuação Total' }}</th>
+            <td mat-cell *matCellDef="let item"  class="col-pts">
+              <span class="nota-destaque">{{ item.notaFinal }}</span>
+              <span class="nota-max">/ 75</span>
+              @if (item.nivelado && item.notaOriginal !== item.notaFinal) {
+              <small class="nota-original-hint">(Orig: {{ item.notaOriginal }})</small>
+            }
             </td>
           </ng-container>
 

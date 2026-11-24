@@ -13,17 +13,29 @@ import { AuthService } from '../../../core/services/auth';
 export class Header {
    authService = inject(AuthService);
 
-   get labelPerfil(): string {
-    const role = this.authService.getUserRole();
-    switch (role) {
-      case 'ROLE_EVALUATOR': return 'Avaliador';
-      case 'ROLE_REVIEWER': return 'Revisor (Comando)';
-      case 'ROLE_COORDINATOR': return 'Administrador';
-      default: return 'Usuário';
+    get roleLabel(): string {
+    switch (this.authService.getUserRole()) {
+      case 'ROLE_COORDINATOR':
+        return 'Coordenador';
+      case 'ROLE_EVALUATOR':
+        return 'Avaliador';
+      case 'ROLE_REVIEWER':
+        return 'Revisor';
+      default:
+        return '';
     }
   }
 
   sair(): void {
     this.authService.logout();
   }
+
+  get currentUser() {
+    return this.authService.getCurrentUser();
+  }
+
+  get isCoordinator(): boolean {
+    return this.authService.getUserRole() === 'ROLE_COORDINATOR';
+  }
+
 }

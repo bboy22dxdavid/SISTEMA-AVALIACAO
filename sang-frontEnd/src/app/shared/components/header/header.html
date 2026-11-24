@@ -1,37 +1,95 @@
-<mat-toolbar class="header-sang">
-  <div class="brand" routerLink="/ranking">
+<mat-toolbar class="sang-navbar">
+  <!-- Logo / Marca -->
+  <a routerLink="/ranking" class="brand-link">
     <mat-icon class="brand-icon">flight</mat-icon>
     <span class="brand-title">SANG</span>
-  </div>
+  </a>
 
-  <nav class="nav-links">
-    <a mat-button routerLink="/ranking" routerLinkActive="link-ativo">
+  <!-- Links de Navegação (Desktop) -->
+  <nav class="nav-links-desktop">
+    <a mat-button routerLink="/ranking" routerLinkActive="active-link">
       <mat-icon>leaderboard</mat-icon>
       Ranking
     </a>
 
-    <a mat-button routerLink="/usuarios/novo" routerLinkActive="link-ativo">
-      <mat-icon>person_add</mat-icon>
-      Cadastrar Militar
-    </a>
+    @if (isCoordinator) {
+      <a mat-button routerLink="/usuarios" routerLinkActive="active-link">
+        <mat-icon>manage_accounts</mat-icon>
+        Gestão de Acessos
+      </a>
+      <a mat-button routerLink="/designacoes" routerLinkActive="active-link">
+        <mat-icon>assignment_ind</mat-icon>
+        Designações
+      </a>
+    }
   </nav>
 
   <span class="spacer"></span>
-
-  <div class="user-menu">
-    <span class="perfil-badge">{{ labelPerfil }}</span>
-
-    <button mat-button [matMenuTriggerFor]="menuPerfil" class="btn-perfil">
+@if (roleLabel) {
+  <span class="role-badge">{{ roleLabel }}</span>
+}
+  <!-- Perfil do Usuário (Desktop) -->
+  <div class="user-section-desktop">
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-trigger-btn">
       <mat-icon>account_circle</mat-icon>
-      <span>{{ authService.getAuthData()?.username || 'Usuário' }}</span>
+      <span class="user-label"> {{ currentUser?.username }}</span>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
 
-    <mat-menu #menuPerfil="matMenu">
+    <mat-menu #userMenu="matMenu">
+      <div class="menu-user-header" disabled>
+        <strong>{{ currentUser?.posto }} {{ currentUser?.username }}</strong>
+        <small>SARAM: {{ currentUser?.saram }}</small>
+      </div>
+      <mat-divider></mat-divider>
       <button mat-menu-item (click)="sair()">
         <mat-icon color="warn">logout</mat-icon>
         <span>Sair do Sistema</span>
       </button>
     </mat-menu>
   </div>
+
+  <!-- Botão Menu Hambúrguer (Exibido apenas no Mobile <= 768px) -->
+  <button mat-icon-button
+          [matMenuTriggerFor]="mobileMenu"
+          class="mobile-hamburger-btn"
+          aria-label="Abrir menu de navegação">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Dropdown Unificado Mobile (Perfil + Navegação + Sair) -->
+  <mat-menu #mobileMenu="matMenu" class="mobile-dropdown-menu">
+    <div class="mobile-user-info">
+      <mat-icon class="avatar-icon">account_circle</mat-icon>
+      <div>
+        <strong>{{ currentUser?.posto }} {{ currentUser?.username }}</strong>
+        <small>SARAM: {{ currentUser?.saram }}</small>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <a mat-menu-item routerLink="/ranking" routerLinkActive="active-mobile-item">
+      <mat-icon>leaderboard</mat-icon>
+      <span>Ranking</span>
+    </a>
+
+    @if (isCoordinator) {
+      <a mat-menu-item routerLink="/usuarios" routerLinkActive="active-mobile-item">
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Gestão de Acessos</span>
+      </a>
+      <a mat-menu-item routerLink="/designacoes" routerLinkActive="active-mobile-item">
+        <mat-icon>assignment_ind</mat-icon>
+        <span>Designações</span>
+      </a>
+    }
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item (click)="sair()" class="btn-sair-mobile">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

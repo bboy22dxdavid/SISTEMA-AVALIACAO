@@ -62,7 +62,7 @@ Lista de tarefas técnicas e funcionais divididas por etapas. Marque `[x]` somen
 
 ## Fase 4: Frontend Angular e Experiência Visual
 
-- [ ] **TASK-12: Inicializar Projeto Angular e Estrutura Visual Padrão (App Shell)**
+- [X] **TASK-12: Inicializar Projeto Angular e Estrutura Visual Padrão (App Shell)**
   - **Descrição:** Criar aplicação em `/frontend`, configurar rotas *Lazy Loaded* e construir `MainLayoutComponent` contendo: **Toolbar superior** (logo à esquerda com link para home, menu central dinâmico por role, perfil e botão sair à direita), **Container central** e **Footer** (logo à esquerda + título oficial).
   - **Critério de Aprovação:** A estrutura visual renderiza corretamente em desktop e mobile, exibindo no menu apenas os links permitidos para o perfil logado.
 

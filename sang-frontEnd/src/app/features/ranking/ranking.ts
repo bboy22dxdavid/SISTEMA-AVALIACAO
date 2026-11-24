@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { catchError, finalize, forkJoin, of, Subscription } from 'rxjs';
+import {  finalize,  Subscription } from 'rxjs';
 import { MaterialModule } from '../../shared/components/material-module/material-module';
 import { ProcessoService } from '../../core/services/processo-service';
 import { RankingService } from '../../core/services/ranking-service';
@@ -13,9 +13,10 @@ import { AvaliadoService } from '../../core/services/avaliado';
 import { AuthService } from '../../core/services/auth';
 import { Processo } from '../../shared/models/processo';
 import { RankingResponse } from '../../shared/models/ranking-response';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
-  imports: [CommonModule, FormsModule, MaterialModule],
+  imports: [CommonModule, FormsModule, MaterialModule,  ],
   selector: 'app-ranking',
   styleUrl: './ranking.scss',
   templateUrl: './ranking.html',
@@ -29,6 +30,9 @@ export class Ranking implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
 
+  // Dentro da classe RankingComponent:
+private readonly breakpointObserver = inject(BreakpointObserver);
+
   private subProcessos?: Subscription;
   private paginatorRef?: MatPaginator;
 
@@ -40,15 +44,27 @@ export class Ranking implements OnInit, OnDestroy {
   }
 
   processos: Processo[] = [];
-  processoSelecionadoId = '';
-  exibirNovoProcesso = false;
-  novoAnoProcesso = new Date().getFullYear();
+  processoSelecionadoId: string = '';
+
   dataSource = new MatTableDataSource<RankingResponse>([]);
   opcoesPagina = [5, 10, 25];
-  termoBusca = '';
+
+  exibirNovoProcesso = false;
+  novoAnoProcesso = new Date().getFullYear();
+
+
+  termoBusca: string = '';
   carregando = false;
 
-  colunasExibidas = ['posicao', 'foto', 'militar', 'secao', 'pontuacao', 'status', 'acao'];
+  colunasDesktop: string[] = ['posicao', 'foto', 'militar', 'secao', 'pontuacao', 'status', 'acao'];
+  colunasMobile: string[] = ['posicao', 'militar', 'pontuacao', 'status', 'acao'];
+
+  colunasExibidas: string[] = this.colunasDesktop;
+  isMobile = false;
+
+   get isCoordinator(): boolean {
+    return this.authService.getUserRole() === 'ROLE_COORDINATOR';
+  }
 
   get isAvaliador(): boolean {
     return this.authService.getUserRole() === 'ROLE_EVALUATOR';
@@ -61,10 +77,16 @@ export class Ranking implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.configurarFiltroDataSource();
 
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe(result => {
+      this.isMobile = result.matches;
+      this.colunasExibidas = this.isMobile ? this.colunasMobile : this.colunasDesktop;
+      this.cdr.detectChanges();
+    });
+
     this.subProcessos = this.processoService.processos$.subscribe(lista => {
       this.processos = lista;
       if (lista.length > 0 && !this.processoSelecionadoId) {
-        this.processoSelecionadoId = lista[0].id;
+        this.processoSelecionadoId = lista.at(0)!.id;
         this.carregarDadosRanking();
       }
       this.cdr.detectChanges();
@@ -81,7 +103,7 @@ export class Ranking implements OnInit, OnDestroy {
 
   criarNovoProcesso(): void {
     if (!this.novoAnoProcesso || this.novoAnoProcesso < 2000) {
-      this.snackBar.open('Informe um ano válido (ex: 2026).', 'Fechar', { duration: 3500 });
+      this.snackBar.open('Informe um ano válido.', 'Fechar', { duration: 3500 });
       return;
     }
 
@@ -108,7 +130,7 @@ export class Ranking implements OnInit, OnDestroy {
   private configurarFiltroDataSource(): void {
     this.dataSource.filterPredicate = (data: RankingResponse, filter: string) => {
       const termo = filter.trim().toLowerCase();
-      return data.nguerra.toLowerCase().includes(termo) ||
+      return data.nomeGuerra.toLowerCase().includes(termo) ||
         data.saram.toLowerCase().includes(termo) ||
         data.secao.toLowerCase().includes(termo);
     };
@@ -118,45 +140,25 @@ export class Ranking implements OnInit, OnDestroy {
     if (!this.processoSelecionadoId) return;
 
     this.carregando = true;
-    forkJoin({
-      avaliados: this.avaliadoService.listarTodos().pipe(
-        catchError(err => {
-          console.error('Erro ao buscar avaliados:', err);
-          return of([]);
-        })
-      ),
-      pontuados: this.rankingService.obterRankingPorProcesso(this.processoSelecionadoId).pipe(
-        catchError(err => {
-          console.error('Erro ao buscar ranking:', err);
-          return of([]);
-        })
-      )
-    })
+    this.rankingService.obterRankingPorProcesso(this.processoSelecionadoId)
       .pipe(finalize(() => {
         this.carregando = false;
         this.cdr.detectChanges();
       }))
-      .subscribe(({ avaliados, pontuados }) => {
-        const ativos = avaliados.filter(av => av.ativo !== false);
-        const idsPontuados = new Set(pontuados.map(p => p.avaliadoId));
-
-        const pendentes: RankingResponse[] = ativos
-          .filter(av => av.id && !idsPontuados.has(av.id))
-          .map(av => ({
-            avaliadoId: av.id!,
-            avaliacaoId: null,
-            saram: av.saram,
-            posto: av.posto,
-            nguerra: av.nguerra,
-            secao: av.secao,
-            antiguidade: av.antiguidade,
-            pontuacaoTotal: 0,
-            nivelado: false
-          }));
-
-        this.dataSource.data = [...pontuados, ...pendentes];
-        this.aplicarFiltro();
-        this.cdr.detectChanges();
+      .subscribe({
+        next: (lista) => {
+          this.dataSource = new MatTableDataSource<RankingResponse>(lista);
+          this.configurarFiltroDataSource();
+          if (this.paginatorRef) {
+            this.dataSource.paginator = this.paginatorRef;
+          }
+          this.aplicarFiltro();
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Erro ao carregar ranking:', err);
+          this.snackBar.open('Erro ao carregar classificação oficial.', 'Fechar', { duration: 4000 });
+        }
       });
   }
 
